@@ -70,11 +70,11 @@ export default function CustomerSignup() {
 
         {/* Logo */}
         <div className="flex justify-center mb-5">
-          <div className="h-12 w-12 rounded-xl bg-white border border-gray-200 shadow-sm flex items-center justify-center">
+          <div className="h-20 w-32 rounded-xl bg-white border border-gray-200 shadow-sm flex items-center justify-center">
             <img
-              src="/logo.svg"
+              src="/sterlingLogo2.jpeg"
               alt="Company logo"
-              className="h-8 w-8 object-contain"
+              className="h-20 w-20 object-contain"
             />
           </div>
         </div>
@@ -114,7 +114,7 @@ export default function CustomerSignup() {
             name="identifier"
             value={formData.identifier}
             onChange={handleChange}
-            placeholder="Account Number"
+           placeholder="Account Number / Meter Number"
             autoComplete="username"
             required
             className="w-full h-12 px-4 rounded-full border border-[#dce1e8] bg-white text-sm text-[#1e293b] outline-none placeholder:text-[#64748b] focus:border-[#2563eb] focus:ring-2 focus:ring-blue-100 transition"

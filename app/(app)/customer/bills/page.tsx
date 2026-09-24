@@ -1,7 +1,10 @@
 import React from 'react'
+import BuyPower from './buypower/page'
 
-export default function page() {
+export default function BillsAndPayment() {
   return (
-    <div>page</div>
+    <div>
+      <BuyPower/>
+    </div>
   )
 }

@@ -112,11 +112,11 @@ setError("Unable to log in. Please try again.");
         {/* Logo */}
 
         <div className="flex justify-center mb-5">
-          <div className="h-12 w-12 rounded-xl bg-white border border-gray-200 shadow-sm flex items-center justify-center">
+          <div className="h-20 w-32 rounded-xl bg-white border border-gray-200 shadow-sm flex items-center justify-center">
             <img
-              src="/logo.svg"
+              src="/sterlingLogo2.jpeg"
               alt="Company logo"
-              className="h-8 w-8 object-contain"
+              className="h-20 w-20 object-contain"
             />
           </div>
         </div>
