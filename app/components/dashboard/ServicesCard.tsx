@@ -12,7 +12,7 @@ import ArrowForwardRoundedIcon from "@mui/icons-material/ArrowForwardRounded";
 const services = [
   {
     title: "E-Token",
-    href: "/customer/bills/buy-power",
+    href: "/customer/bills/buypower",
     icon: ElectricBoltOutlinedIcon,
     bgColor: "bg-pink-50",
     iconColor: "text-pink-600",

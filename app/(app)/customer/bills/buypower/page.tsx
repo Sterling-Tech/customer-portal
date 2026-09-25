@@ -25,7 +25,7 @@ export default function BuyPower() {
 
   const [activeTab, setActiveTab] = useState<PaymentTab>("buy");
 
-  const [meterNumber, setMeterNumber] = useState("1234567891");
+  const [meterNumber, setMeterNumber] = useState("12345678911");
 
   const [amount, setAmount] = useState("1000");
 
@@ -164,11 +164,15 @@ export default function BuyPower() {
         >
           <ArrowBack fontSize="small" />
         </button>
-
-        <h1 className="text-[16px] font-bold text-[#1e293b]">
-          Pay electricity
-        </h1>
-
+        {activeTab === "buy" ? (
+          <h1 className="text-[16px] font-bold text-[#1e293b]">
+            Pay electricity
+          </h1>
+        ) : (
+          <h1 className="text-[16px] font-bold text-[#1e293b]">
+            Clear arrears
+          </h1>
+        )}
       </header>
 
       {/* =========================
@@ -230,7 +234,7 @@ export default function BuyPower() {
             PAYMENT TABS
         ========================= */}
 
-        <section className="flex h-[43px] items-center gap-1 rounded-[15px] bg-[#edf0f8] p-1">
+        <section className="flex h-[58px] items-center gap-1 rounded-[15px] bg-[#edf0f8] p-2">
 
           <button
             type="button"
@@ -239,8 +243,8 @@ export default function BuyPower() {
               setPaymentError("");
             }}
             className={`flex h-full flex-1 items-center justify-center rounded-[12px] text-[12px] font-semibold transition ${activeTab === "buy"
-                ? "bg-white text-[#6175f5] shadow-sm"
-                : "text-[#718096] hover:text-[#1e293b]"
+              ? "bg-white text-[#6175f5] shadow-sm"
+              : "text-[#718096] hover:text-[#1e293b]"
               }`}
           >
             Buy units / pay bill
@@ -253,8 +257,8 @@ export default function BuyPower() {
               setPaymentError("");
             }}
             className={`flex h-full flex-1 items-center justify-center rounded-[12px] text-[12px] font-semibold transition ${activeTab === "arrears"
-                ? "bg-white text-[#6175f5] shadow-sm"
-                : "text-[#718096] hover:text-[#1e293b]"
+              ? "bg-white text-[#6175f5] shadow-sm"
+              : "text-[#718096] hover:text-[#1e293b]"
               }`}
           >
             Clear arrears
@@ -262,151 +266,146 @@ export default function BuyPower() {
 
         </section>
 
-        {activeTab === "buy" ? (
-          <div className="space-y-5">
-            <section className="rounded-[19px] border border-[#edf0f5] bg-white px-3.5 py-3">
+        <>
+          <section className="rounded-[19px] border border-[#edf0f5] bg-white px-3.5 py-3">
 
-              <h3 className="mb-2 text-[14px] font-semibold text-[#1e293b]">
-                Meter or account number
-              </h3>
+            <h3 className="mb-2 text-[14px] font-semibold text-[#1e293b]">
+              Meter or account number
+            </h3>
 
-              <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2">
 
-                {/* Meter Input */}
+              {/* Meter Input */}
 
-                <div className="flex h-[43px] min-w-0 flex-1 items-center gap-2 rounded-[13px] border border-[#edf0f5] bg-[#f7f8fc] px-3">
+              <div className="flex h-[43px] min-w-0 flex-1 items-center gap-2 rounded-[13px] border border-[#edf0f5] bg-[#f7f8fc] px-3">
 
-                  <Bolt
-                    sx={{
-                      fontSize: 18,
-                      color: "#8995a8",
-                    }}
-                  />
-
-                  <input
-                    type="text"
-                    value={meterNumber}
-                    onChange={(e) => {
-                      setMeterNumber(e.target.value);
-                      setMeterChecked(false);
-                      setMeterError("");
-                      setPaymentError("");
-                    }}
-                    placeholder="Enter meter number"
-                    className="w-full min-w-0 bg-transparent text-[14px] font-medium text-[#1e293b] outline-none placeholder:text-gray-400"
-                  />
-
-                </div>
-
-                {/* Check Button */}
-
-                <button
-                  type="button"
-                  onClick={handleCheckMeter}
-                  disabled={checkingMeter}
-                  className="flex h-[43px] min-w-[72px] items-center justify-center rounded-[13px] bg-[#6175f5] px-4 text-[13px] font-semibold text-white transition hover:bg-[#4f63e6] disabled:cursor-not-allowed disabled:opacity-60"
-                >
-                  {checkingMeter ? "Checking..." : "Check"}
-                </button>
-
-              </div>
-
-              {/* Meter Validation */}
-
-              {meterError && (
-                <p className="mt-1.5 flex items-center gap-1 text-[12px] font-medium text-[#dc2626]">
-                  {meterError}
-                </p>
-              )}
-
-              {meterChecked && (
-                <p className="mt-2 flex items-center gap-1 text-[12px] font-medium text-green-600">
-                  <CheckCircleOutlined sx={{ fontSize: 15 }} />
-
-                  Account verified successfully.
-                </p>
-              )}
-
-            </section>
-
-            <section className="rounded-[19px] border border-[#edf0f5] bg-white px-3.5 py-3">
-
-              <h3 className="mb-2 text-[14px] font-semibold text-[#1e293b]">
-                Amount
-              </h3>
-
-              {/* Amount Input */}
-
-              <div className="flex h-[49px] items-center gap-2 rounded-[13px] border border-[#edf0f5] bg-[#f7f8fc] px-3">
-
-                <span className="text-[20px] font-bold text-[#64748b]">
-                  ₦
-                </span>
+                <Bolt
+                  sx={{
+                    fontSize: 18,
+                    color: "#8995a8",
+                  }}
+                />
 
                 <input
                   type="text"
-                  inputMode="numeric"
-                  value={formatAmount(amount)}
-                  onChange={(e) =>
-                    handleAmountChange(e.target.value)
-                  }
-                  placeholder="Enter amount"
-                  className="w-full min-w-0 bg-transparent text-[20px] font-bold text-[#1e293b] outline-none"
+                  value={meterNumber}
+                  onChange={(e) => {
+                    setMeterNumber(e.target.value);
+                    setMeterChecked(false);
+                    setMeterError("");
+                    setPaymentError("");
+                  }}
+                  placeholder="Enter meter number"
+                  className="w-full min-w-0 bg-transparent text-[14px] font-medium text-[#1e293b] outline-none placeholder:text-gray-400"
                 />
 
-                {/* Clear Amount */}
+              </div>
 
-                {amount && (
+              {/* Check Button */}
+
+              <button
+                type="button"
+                onClick={handleCheckMeter}
+                disabled={checkingMeter}
+                className="flex h-[43px] min-w-[72px] items-center justify-center rounded-[13px] bg-[#6175f5] px-4 text-[13px] font-semibold text-white transition hover:bg-[#4f63e6] disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                {checkingMeter ? "Checking..." : "Check"}
+              </button>
+
+            </div>
+
+            {/* Meter Validation */}
+
+            {meterError && (
+              <p className="mt-1.5 flex items-center gap-1 text-[12px] font-medium text-[#dc2626]">
+                {meterError}
+              </p>
+            )}
+
+            {meterChecked && (
+              <p className="mt-2 flex items-center gap-1 text-[12px] font-medium text-green-600">
+                <CheckCircleOutlined sx={{ fontSize: 15 }} />
+
+                Account verified successfully.
+              </p>
+            )}
+
+          {/* </section>
+
+          <section className="rounded-[19px] border border-[#edf0f5] bg-white px-3.5 py-3"> */}
+
+            <h3 className="mb-2 text-[14px] font-semibold text-[#1e293b] mt-5">
+              Amount
+            </h3>
+
+            {/* Amount Input */}
+
+            <div className="flex h-[49px] items-center gap-2 rounded-[13px] border border-[#edf0f5] bg-[#f7f8fc] px-3">
+
+              <span className="text-[20px] font-bold text-[#64748b]">
+                ₦
+              </span>
+
+              <input
+                type="text"
+                inputMode="numeric"
+                value={formatAmount(amount)}
+                onChange={(e) =>
+                  handleAmountChange(e.target.value)
+                }
+                placeholder="Enter amount"
+                className="w-full min-w-0 bg-transparent text-[20px] font-bold text-[#1e293b] outline-none"
+              />
+
+              {/* Clear Amount */}
+
+              {amount && (
+                <button
+                  type="button"
+                  onClick={() => setAmount("")}
+                  className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-[#94a3b8] transition hover:text-red-500"
+                >
+                  <Close
+                    sx={{
+                      fontSize: 16,
+                      backgroundColor: "#e2e8f0",
+                      borderRadius: "50%",
+                      padding: "2px",
+                    }}
+                  />
+                </button>
+              )}
+
+            </div>
+
+            {/* Preset Amounts */}
+
+            <div className="mt-2.5 flex flex-wrap gap-2">
+
+              {PRESET_AMOUNTS.map((preset) => {
+                const isSelected = Number(amount) === preset;
+
+                return (
                   <button
+                    key={preset}
                     type="button"
-                    onClick={() => setAmount("")}
-                    className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-[#94a3b8] transition hover:text-red-500"
+                    onClick={() => {
+                      setAmount(String(preset));
+                      setPaymentError("");
+                    }}
+                    className={`flex h-[31px] min-w-[55px] items-center justify-center rounded-full border px-3 text-[12px] font-semibold transition ${isSelected
+                      ? "border-[#6175f5] bg-[#6175f5] text-white shadow-sm"
+                      : "border-[#edf0f5] bg-white text-[#1e293b] hover:border-[#6175f5]"
+                      }`}
                   >
-                    <Close
-                      sx={{
-                        fontSize: 16,
-                        backgroundColor: "#e2e8f0",
-                        borderRadius: "50%",
-                        padding: "2px",
-                      }}
-                    />
+                    {formatAmount(preset)}
                   </button>
-                )}
+                );
+              })}
 
-              </div>
+            </div>
 
-              {/* Preset Amounts */}
 
-              <div className="mt-2.5 flex flex-wrap gap-2">
-
-                {PRESET_AMOUNTS.map((preset) => {
-                  const isSelected = Number(amount) === preset;
-
-                  return (
-                    <button
-                      key={preset}
-                      type="button"
-                      onClick={() => {
-                        setAmount(String(preset));
-                        setPaymentError("");
-                      }}
-                      className={`flex h-[31px] min-w-[55px] items-center justify-center rounded-full border px-3 text-[12px] font-semibold transition ${isSelected
-                          ? "border-[#6175f5] bg-[#6175f5] text-white shadow-sm"
-                          : "border-[#edf0f5] bg-white text-[#1e293b] hover:border-[#6175f5]"
-                        }`}
-                    >
-                      {formatAmount(preset)}
-                    </button>
-                  );
-                })}
-
-              </div>
-
-            </section>
-
-            {/* =========================
-            PAYMENT METHOD
-        ========================= */}
 
             <section className="rounded-[16px] bg-white px-3.5 py-2">
 
@@ -431,7 +430,7 @@ export default function BuyPower() {
 
                 </div>
 
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 mt-10">
 
                   <span className="text-[12px] text-[#64748b]">
                     ₦{formatAmount(walletBalance)}
@@ -442,8 +441,11 @@ export default function BuyPower() {
               </button>
 
             </section>
+          </section>
+        </>
 
-
+        {activeTab === "buy" ? (
+          <div className="space-y-5">
             {paymentError && (
               <div className="flex items-center gap-1.5 px-0.5 text-[12px] font-medium text-[#dc2626]">
 
@@ -480,185 +482,6 @@ export default function BuyPower() {
           </div>
         ) : (
           <div className="space-y-5">
-            <section className="rounded-[19px] border border-[#edf0f5] bg-white px-3.5 py-3">
-
-              <h3 className="mb-2 text-[14px] font-semibold text-[#1e293b]">
-                Meter or account number
-              </h3>
-
-              <div className="flex items-center gap-2">
-
-                {/* Meter Input */}
-
-                <div className="flex h-[43px] min-w-0 flex-1 items-center gap-2 rounded-[13px] border border-[#edf0f5] bg-[#f7f8fc] px-3">
-
-                  <Bolt
-                    sx={{
-                      fontSize: 18,
-                      color: "#8995a8",
-                    }}
-                  />
-
-                  <input
-                    type="text"
-                    value={meterNumber}
-                    onChange={(e) => {
-                      setMeterNumber(e.target.value);
-                      setMeterChecked(false);
-                      setMeterError("");
-                      setPaymentError("");
-                    }}
-                    placeholder="Enter meter number"
-                    className="w-full min-w-0 bg-transparent text-[14px] font-medium text-[#1e293b] outline-none placeholder:text-gray-400"
-                  />
-
-                </div>
-
-                {/* Check Button */}
-
-                <button
-                  type="button"
-                  onClick={handleCheckMeter}
-                  disabled={checkingMeter}
-                  className="flex h-[43px] min-w-[72px] items-center justify-center rounded-[13px] bg-[#6175f5] px-4 text-[13px] font-semibold text-white transition hover:bg-[#4f63e6] disabled:cursor-not-allowed disabled:opacity-60"
-                >
-                  {checkingMeter ? "Checking..." : "Check"}
-                </button>
-
-              </div>
-
-              {/* Meter Validation */}
-
-              {meterError && (
-                <p className="mt-1.5 flex items-center gap-1 text-[12px] font-medium text-[#dc2626]">
-                  {meterError}
-                </p>
-              )}
-
-              {meterChecked && (
-                <p className="mt-2 flex items-center gap-1 text-[12px] font-medium text-green-600">
-                  <CheckCircleOutlined sx={{ fontSize: 15 }} />
-
-                  Account verified successfully.
-                </p>
-              )}
-
-            </section>
-
-            <section className="rounded-[19px] border border-[#edf0f5] bg-white px-3.5 py-3">
-
-              <h3 className="mb-2 text-[14px] font-semibold text-[#1e293b]">
-                Amount
-              </h3>
-
-              {/* Amount Input */}
-
-              <div className="flex h-[49px] items-center gap-2 rounded-[13px] border border-[#edf0f5] bg-[#f7f8fc] px-3">
-
-                <span className="text-[20px] font-bold text-[#64748b]">
-                  ₦
-                </span>
-
-                <input
-                  type="text"
-                  inputMode="numeric"
-                  value={formatAmount(amount)}
-                  onChange={(e) =>
-                    handleAmountChange(e.target.value)
-                  }
-                  placeholder="Enter amount"
-                  className="w-full min-w-0 bg-transparent text-[20px] font-bold text-[#1e293b] outline-none"
-                />
-
-                {/* Clear Amount */}
-
-                {amount && (
-                  <button
-                    type="button"
-                    onClick={() => setAmount("")}
-                    className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-[#94a3b8] transition hover:text-red-500"
-                  >
-                    <Close
-                      sx={{
-                        fontSize: 16,
-                        backgroundColor: "#e2e8f0",
-                        borderRadius: "50%",
-                        padding: "2px",
-                      }}
-                    />
-                  </button>
-                )}
-
-              </div>
-
-              {/* Preset Amounts */}
-
-              <div className="mt-2.5 flex flex-wrap gap-2">
-
-                {PRESET_AMOUNTS.map((preset) => {
-                  const isSelected = Number(amount) === preset;
-
-                  return (
-                    <button
-                      key={preset}
-                      type="button"
-                      onClick={() => {
-                        setAmount(String(preset));
-                        setPaymentError("");
-                      }}
-                      className={`flex h-[31px] min-w-[55px] items-center justify-center rounded-full border px-3 text-[12px] font-semibold transition ${isSelected
-                          ? "border-[#6175f5] bg-[#6175f5] text-white shadow-sm"
-                          : "border-[#edf0f5] bg-white text-[#1e293b] hover:border-[#6175f5]"
-                        }`}
-                    >
-                      {formatAmount(preset)}
-                    </button>
-                  );
-                })}
-
-              </div>
-
-            </section>
-
-            {/* =========================
-            PAYMENT METHOD
-        ========================= */}
-
-            <section className="rounded-[16px] bg-white px-3.5 py-2">
-
-              <button
-                type="button"
-                onClick={() => setPaymentMethod("wallet")}
-                className="flex w-full items-center justify-between py-1"
-              >
-
-                <div className="flex items-center gap-2">
-
-                  <CreditCardOutlined
-                    sx={{
-                      fontSize: 19,
-                      color: "#6175f5",
-                    }}
-                  />
-
-                  <span className="text-[13px] font-medium text-[#1e293b]">
-                    Pay wallet
-                  </span>
-
-                </div>
-
-                <div className="flex items-center gap-2">
-
-                  <span className="text-[12px] text-[#64748b]">
-                    ₦{formatAmount(walletBalance)}
-                  </span>
-
-                </div>
-
-              </button>
-
-            </section>
-
 
             {paymentError && (
               <div className="flex items-center gap-1.5 px-0.5 text-[12px] font-medium text-[#dc2626]">
@@ -692,7 +515,7 @@ export default function BuyPower() {
               )}
 
             </button>
-            <p>Arrears Payments are applied to the oldest outstanding debt first</p>
+            <p className="text-black/60 text-center">Arrears Payments are applied to the oldest outstanding debt first</p>
           </div>
         )}
       </div>

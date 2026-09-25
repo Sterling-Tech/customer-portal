@@ -8,6 +8,7 @@ import QuickActions from "@/app/components/dashboard/QuickActions";
 import ServicesCard from "@/app/components/dashboard/ServicesCard";
 import SummaryCards from "@/app/components/dashboard/SummaryCards";
 import RecentTransactions from "@/app/components/dashboard/RecentTransactions";
+import DebtSummaryCards from "@/app/components/dashboard/DebtSummaryCard";
 
 export default async function CustomerDashboard() {
   //   const { data: session, status } = useSession();
@@ -31,7 +32,9 @@ export default async function CustomerDashboard() {
           Welcome back! <span className="font-bold text-lg">{customer.name}</span> Here's your account overview.
         </p>
       </div>
-
+      <div>
+        <DebtSummaryCards />
+      </div>
       {/* Top Dashboard Section */}
       <div className="">
         <WalletCard
@@ -40,14 +43,14 @@ export default async function CustomerDashboard() {
           accountNumber={customer?.account_number?.slice(-4) ?? "----"}
           meterNumber={customer?.meter_number}
           meterType={customer.metering_type.name}
-          // monthlySpent={dashboardData?.monthly_spent ?? 0}
-          // lastPayment={dashboardData?.last_payment ?? 0}
-          // energyUsed={dashboardData?.energy_used ?? "—"}
+        // monthlySpent={dashboardData?.monthly_spent ?? 0}
+        // lastPayment={dashboardData?.last_payment ?? 0}
+        // energyUsed={dashboardData?.energy_used ?? "—"}
         />
 
         {/* Additional dashboard content can go here */}
         <QuickActions />
-        <SummaryCards />
+        {/* <SummaryCards /> */}
         <ServicesCard />
         <RecentTransactions />
       </div>
