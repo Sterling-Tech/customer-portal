@@ -1,187 +1,29 @@
-// 'use client'
-// import React, { useState } from "react";
-// import BoltIcon from "@mui/icons-material/Bolt";
-// import AccountBalanceWalletOutlinedIcon from "@mui/icons-material/AccountBalanceWalletOutlined";
-// import { Replay, Search } from "@mui/icons-material";
-
-// interface Transaction {
-//     id: string;
-//     title: string;
-//     subtitle: string;
-//     amount: number;
-//     date: string;
-// }
-
-// const transactions: Transaction[] = [
-//     {
-//         id: "1",
-//         title: "Token via vendingTES...",
-//         subtitle: "Token 2487 4857 5862 6633 ...",
-//         amount: -200,
-//         date: "Sat, 12 Sept · 20:02",
-//     },
-//     {
-//         id: "2",
-//         title: "Token via vendingTES...",
-//         subtitle: "Token 8455 7543 6278 3535 ...",
-//         amount: -200,
-//         date: "Sat, 12 Sept · 20:02",
-//     },
-//     {
-//         id: "3",
-//         title: "Token via vendingTES...",
-//         subtitle: "Token 8828 7547 5847 3253 ...",
-//         amount: -200,
-//         date: "Sat, 12 Sept · 20:02",
-//     },
-//     {
-//         id: "4",
-//         title: "Token via vendingTES...",
-//         subtitle: "Token 1234 5678 9012 3456 ...",
-//         amount: -200,
-//         date: "Sat, 12 Sept · 20:01",
-//     },
-//     {
-//         id: "5",
-//         title: "Token via vendingTES...",
-//         subtitle: "Token 9876 5432 1098 7654 ...",
-//         amount: -200,
-//         date: "Sat, 12 Sept · 20:01",
-//     },
-// ];
-
-// const RecentTransactions: React.FC = () => {
-//     const [activeTab, setActiveTab] = useState<"customer" | "wallet">("customer");
-
-//     return (
-//         <div className="mt-6 w-full mx-auto bg-white rounded-2xl shadow-sm border border-gray-100 p-5">
-//             {/* Header */}
-//             <div className="flex items-center justify-between mb-5">
-//                 <div className="flex items-center gap-2">
-//                     <BoltIcon className="text-blue-500" sx={{ fontSize: 20 }} />
-//                     <h2 className="text-lg font-semibold text-gray-900">
-//                         Recent transactions
-//                     </h2>
-//                 </div>
-//                 <button className="text-sm font-medium text-indigo-500 hover:text-blue-600 transition-colors">
-//                     See all
-//                 </button>
-//             </div>
-
-//             {/* Tabs */}
-//             <div className="flex border-b border-gray-100 mb-4 gap-16">
-//                 <button
-//                     onClick={() => setActiveTab("customer")}
-//                     className={`flex items-center gap-1.5 px-1 pb-3 mr-6 text-sm font-medium transition-colors relative ${activeTab === "customer"
-//                         ? "text-gray-900"
-//                         : "text-gray-400 hover:text-gray-600"
-//                         }`}
-//                 >
-//                     <BoltIcon
-//                         sx={{ fontSize: 16 }}
-//                         className={activeTab === "customer" ? "text-blue-500" : "text-gray-400"}
-//                     />
-//                     Customer
-//                     {activeTab === "customer" && (
-//                         <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-500 rounded-full" />
-//                     )}
-//                 </button>
-
-//                 <button
-//                     onClick={() => setActiveTab("wallet")}
-//                     className={`flex items-center gap-1.5 px-1 pb-3 text-sm font-medium transition-colors relative ${activeTab === "wallet"
-//                         ? "text-gray-900"
-//                         : "text-gray-400 hover:text-gray-600"
-//                         }`}
-//                 >
-//                     <AccountBalanceWalletOutlinedIcon
-//                         sx={{ fontSize: 16 }}
-//                         className={activeTab === "wallet" ? "text-blue-500" : "text-gray-400"}
-//                     />
-//                     Wallet
-//                     {activeTab === "wallet" && (
-//                         <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-500 rounded-full" />
-//                     )}
-//                 </button>
-//             </div>
-
-//             {
-//                 activeTab === 'customer' ? (
-//                     <div>
-//                         {/* Showing count */}
-//                         <p className="text-xs text-gray-400 mb-4">Showing 5 of 8559</p>
-
-//                         {/* Transaction list */}
-//                         <div className="space-y-4">
-//                             {transactions.map((tx) => (
-//                                 <div key={tx.id} className="flex items-start gap-3">
-//                                     {/* Icon */}
-//                                     <div className="flex-shrink-0 w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center">
-//                                         <BoltIcon className="text-amber-500" sx={{ fontSize: 20 }} />
-//                                     </div>
-
-//                                     {/* Content */}
-//                                     <div className="flex-1 min-w-0">
-//                                         <div className="flex items-start justify-between gap-2">
-//                                             <div className="min-w-0">
-//                                                 <p className="text-sm font-medium text-gray-900 truncate">
-//                                                     {tx.title}
-//                                                 </p>
-//                                                 <p className="text-xs text-gray-400 truncate mt-0.5">
-//                                                     {tx.subtitle}
-//                                                 </p>
-//                                             </div>
-//                                             <p className="text-sm font-semibold text-gray-900 whitespace-nowrap">
-//                                                 -₦{Math.abs(tx.amount)}
-//                                             </p>
-//                                         </div>
-//                                         <p className="text-xs text-gray-400 mt-1">{tx.date}</p>
-//                                     </div>
-//                                 </div>
-//                             ))}
-//                         </div>
-//                     </div>
-//                 ) : (
-//                     <div className="justify-center items-center flex">
-//                         <div className="space-y-8">
-//                             <div>
-//                                 <Search className="text-amber-600" />
-//                             </div>
-//                             <h2 className="text-black font-bold text-lg">Not Found</h2>
-//                             <h2 className="text-black/60">We could not find what you asked for</h2>
-//                             <button className="bg-indigo-500 py-3 px-6 rounded-2xl hover:bg-blue-500">
-//                                 <Replay /> Try again
-//                             </button>
-//                         </div>
-//                     </div>
-//                 )
-//             }
-//         </div>
-//     );
-// };
-
-// export default RecentTransactions;
-
 "use client";
 
 import React, { useEffect, useState } from "react";
 import BoltIcon from "@mui/icons-material/Bolt";
 import AccountBalanceWalletOutlinedIcon from "@mui/icons-material/AccountBalanceWalletOutlined";
 import { Replay, Search } from "@mui/icons-material";
+import AddCardOutlinedIcon from "@mui/icons-material/AddCardOutlined";
+import ElectricBoltRoundedIcon from "@mui/icons-material/ElectricBoltRounded";
 
 import {
     getTransactions,
     Transaction,
 } from "@/app/services/transactionService";
+import { walletHistory, WalletHistory } from "@/app/services/walletService";
+import { getStatusStyles } from "../customer/FundWallet";
 
 const RecentTransactions: React.FC = () => {
-    const [activeTab, setActiveTab] =
-        useState<"customer" | "wallet">("customer");
+    const [activeTab, setActiveTab] = useState<"customer" | "wallet">("customer");
 
     const [transactions, setTransactions] = useState<Transaction[]>([]);
 
+    const [topUps, setTopUps] = useState<WalletHistory[]>([]);
+
     const [totalTransactions, setTotalTransactions] = useState(0);
 
+    const [historyLoading, setHistoryLoading] = useState(false);
     const [loading, setLoading] = useState(false);
 
     const [error, setError] = useState("");
@@ -218,7 +60,43 @@ const RecentTransactions: React.FC = () => {
         loadTransactions();
     }, []);
 
-    const formatAmount = (amount: string) => {
+    useEffect(() => {
+        const loadWallet = async () => {
+          try {
+            setHistoryLoading(true);
+    
+            const response = await walletHistory();
+    
+            console.log("WALLET RESPONSE:", response);
+    
+            setTopUps(
+              Array.isArray(response.results)
+                ? response.results
+                : []
+            );
+          } catch (error) {
+            console.error(
+              "Failed to load wallet:",
+              error
+            );
+    
+            // setBalance(0);
+            setTopUps([]);
+          } finally {
+            setHistoryLoading(false);
+          }
+        };
+    
+        loadWallet();
+      }, []);
+    
+    const getAmount = (amount: string) => {
+        const value = Number(amount);
+
+        return Number.isFinite(value) ? value : 0;
+    };
+
+    const formatAmount = (amount: string | number) => {
         const numericAmount = Number(amount);
 
         return new Intl.NumberFormat("en-NG", {
@@ -283,11 +161,10 @@ const RecentTransactions: React.FC = () => {
                     onClick={() =>
                         setActiveTab("customer")
                     }
-                    className={`relative mr-6 flex items-center gap-1.5 px-1 pb-3 text-sm font-medium transition-colors ${
-                        activeTab === "customer"
+                    className={`relative mr-6 flex items-center gap-1.5 px-1 pb-3 text-sm font-medium transition-colors ${activeTab === "customer"
                             ? "text-gray-900"
                             : "text-gray-400 hover:text-gray-600"
-                    }`}
+                        }`}
                 >
                     <BoltIcon
                         sx={{ fontSize: 16 }}
@@ -311,11 +188,10 @@ const RecentTransactions: React.FC = () => {
                     onClick={() =>
                         setActiveTab("wallet")
                     }
-                    className={`relative flex items-center gap-1.5 px-1 pb-3 text-sm font-medium transition-colors ${
-                        activeTab === "wallet"
+                    className={`relative flex items-center gap-1.5 px-1 pb-3 text-sm font-medium transition-colors ${activeTab === "wallet"
                             ? "text-gray-900"
                             : "text-gray-400 hover:text-gray-600"
-                    }`}
+                        }`}
                 >
                     <AccountBalanceWalletOutlinedIcon
                         sx={{ fontSize: 16 }}
@@ -487,29 +363,125 @@ const RecentTransactions: React.FC = () => {
                 </div>
             ) : (
                 /* Wallet tab */
-                <div className="flex items-center justify-center py-12">
-                    <div className="flex flex-col items-center text-center">
-                        <Search className="text-amber-600" />
+               <section className="overflow-hidden rounded-[26px] border border-gray-200/70 bg-white shadow-sm">
 
-                        <h2 className="mt-4 text-lg font-bold text-black">
-                            Not Found
-                        </h2>
+                    {/* Header */}
+                    <div className="flex items-center justify-between gap-3 border-b border-gray-100 px-5 py-5 sm:px-6">
 
-                        <p className="mt-1 text-black/60">
-                            We could not find what you asked for
-                        </p>
+                        <div className="flex items-center gap-3">
+                            <ElectricBoltRoundedIcon
+                                className="text-indigo-500"
+                                sx={{ fontSize: 22 }}
+                            />
 
-                        <button
-                            type="button"
-                            onClick={loadTransactions}
-                            className="mt-5 flex items-center gap-2 rounded-2xl bg-indigo-500 px-6 py-3 text-white transition hover:bg-blue-500"
-                        >
-                            <Replay />
+                            <div>
+                                <h2 className="text-lg font-bold text-[#172033] sm:text-xl">
+                                    Recent top ups
+                                </h2>
 
-                            Try again
-                        </button>
+                                <p className="mt-0.5 text-xs text-gray-500 sm:text-sm">
+                                    Your wallet funding history
+                                </p>
+                            </div>
+                        </div>
+
+                        {topUps.length > 0 && (
+                            <span className="rounded-full bg-indigo-50 px-3 py-1 text-xs font-semibold text-indigo-600">
+                                {topUps.length}
+                            </span>
+                        )}
                     </div>
-                </div>
+
+                    {/* Empty state */}
+                    {topUps.length === 0 ? (
+                        <div className="flex min-h-[180px] flex-col items-center justify-center px-5 py-8 text-center">
+
+                            <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-indigo-50 text-gray-500">
+                                <AccountBalanceWalletOutlinedIcon
+                                    sx={{ fontSize: 30 }}
+                                />
+                            </div>
+
+                            <h3 className="text-base font-semibold text-gray-800">
+                                No top ups yet
+                            </h3>
+
+                            <p className="mt-1 max-w-xs text-sm text-gray-500">
+                                Your wallet funding transactions will appear here.
+                            </p>
+                        </div>
+                    ) : (
+                        <div className="divide-y divide-gray-100">
+                            {topUps.map((topUp) => {
+                                const amount = getAmount(topUp.amount);
+
+                                const statusStyles =
+                                    getStatusStyles(topUp.status);
+
+                                return (
+                                    <div
+                                        key={topUp.reference}
+                                        className="flex flex-col gap-4 px-5 py-5 transition hover:bg-gray-50 sm:flex-row sm:items-center sm:justify-between sm:px-6"
+                                    >
+                                        <div className="flex min-w-0 items-center gap-4">
+
+                                            <div
+                                                className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-full ${statusStyles.icon}`}
+                                            >
+                                                <AddCardOutlinedIcon
+                                                    sx={{ fontSize: 21 }}
+                                                />
+                                            </div>
+
+                                            <div className="min-w-0">
+
+                                                <div className="flex flex-wrap items-center gap-2">
+                                                    <p className="font-semibold text-gray-800">
+                                                        Wallet top up
+                                                    </p>
+
+                                                    <span
+                                                        className={`rounded-full px-2.5 py-1 text-[11px] font-semibold capitalize ${statusStyles.badge}`}
+                                                    >
+                                                        {topUp.status}
+                                                    </span>
+                                                </div>
+
+                                                <p className="mt-1 truncate text-xs text-gray-500">
+                                                    Ref: {topUp.reference}
+                                                </p>
+
+                                                {topUp.detail && (
+                                                    <p className="mt-1 text-xs text-gray-400">
+                                                        {topUp.detail}
+                                                    </p>
+                                                )}
+
+                                                <p className="mt-1 text-xs text-gray-400">
+                                                    {formatDate(
+                                                        topUp.completed_at ||
+                                                        topUp.created_at
+                                                    )}
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        <div className="flex items-center justify-between gap-4 sm:block sm:text-right">
+
+                                            <p className="text-lg font-bold text-gray-900">
+                                                {formatAmount(amount)}
+                                            </p>
+
+                                            <p className="mt-1 text-xs capitalize text-gray-400">
+                                                {topUp.provider}
+                                            </p>
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    )}
+                </section>
             )}
         </div>
     );

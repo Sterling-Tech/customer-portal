@@ -38,7 +38,36 @@ interface FundWalletProps {
 type ActiveTab = "topup" | "transfer";
 
 const presetAmounts = [1000, 2000, 5000, 10000, 20000];
+export const getStatusStyles = (
+        status: WalletHistory["status"]
+    ) => {
+        switch (status) {
+            case "successful":
+                return {
+                    badge: "bg-green-50 text-green-700",
+                    icon: "bg-green-50 text-green-600",
+                };
 
+            case "pending":
+                return {
+                    badge: "bg-amber-50 text-amber-700",
+                    icon: "bg-amber-50 text-amber-600",
+                };
+
+            case "abandoned":
+                return {
+                    badge: "bg-red-50 text-red-700",
+                    icon: "bg-red-50 text-red-600",
+                };
+
+            default:
+                return {
+                    badge: "bg-gray-50 text-gray-700",
+                    icon: "bg-gray-50 text-gray-600",
+                };
+        }
+    };
+    
 export default function FundWallet({
     balance,
     accountName,
@@ -238,35 +267,7 @@ export default function FundWallet({
             : transferValid;
 
 
-    const getStatusStyles = (
-        status: WalletHistory["status"]
-    ) => {
-        switch (status) {
-            case "successful":
-                return {
-                    badge: "bg-green-50 text-green-700",
-                    icon: "bg-green-50 text-green-600",
-                };
-
-            case "pending":
-                return {
-                    badge: "bg-amber-50 text-amber-700",
-                    icon: "bg-amber-50 text-amber-600",
-                };
-
-            case "abandoned":
-                return {
-                    badge: "bg-red-50 text-red-700",
-                    icon: "bg-red-50 text-red-600",
-                };
-
-            default:
-                return {
-                    badge: "bg-gray-50 text-gray-700",
-                    icon: "bg-gray-50 text-gray-600",
-                };
-        }
-    };
+    
     return (
         <div className="min-h-screen">
             <div className="mx-auto w-full max-w-7xl space-y-5 px-4 py-6 sm:px-6 lg:py-8">
@@ -295,9 +296,10 @@ export default function FundWallet({
                             </h1>
 
                             <p className="mt-1 text-sm text-gray-500 sm:text-base">
-                                {activeTab === "topup"
+                                {/* {activeTab === "topup"
                                     ? "Add money to your wallet"
-                                    : "Send to another wallet"}
+                                    : "Send to another wallet"} */}
+                                Add money to your wallet
                             </p>
                         </div>
                     </div>
@@ -402,10 +404,6 @@ export default function FundWallet({
 
                 <section className="rounded-[26px] border border-gray-200/70 bg-white p-5 shadow-sm sm:p-6">
 
-                    {/* ---------------------------------------------------
-              Tabs
-          ---------------------------------------------------- */}
-
                     <div className="mb-6 grid grid-cols-2 rounded-2xl bg-[#EDF1FA] p-1.5">
 
                         {/* Top Up */}
@@ -421,7 +419,7 @@ export default function FundWallet({
                         </button>
 
                         {/* Send */}
-                        <button
+                        {/* <button
                             type="button"
                             onClick={() => handleTabChange("transfer")}
                             className={`rounded-xl px-3 py-3 text-sm font-semibold transition-all sm:text-base ${activeTab === "transfer"
@@ -430,7 +428,7 @@ export default function FundWallet({
                                 }`}
                         >
                             Send to someone
-                        </button>
+                        </button> */}
                     </div>
 
                     {/* =================================================
@@ -509,9 +507,8 @@ export default function FundWallet({
               SEND TO SOMEONE CONTENT
           ================================================== */}
 
-                    {activeTab === "transfer" && (
+                    {/* {activeTab === "transfer" && (
                         <>
-                            {/* Recipient */}
                             <div className="mb-6">
 
                                 <label
@@ -544,7 +541,7 @@ export default function FundWallet({
                                 </div>
                             </div>
 
-                            {/* Amount */}
+                           
                             <div>
 
                                 <label
@@ -574,7 +571,7 @@ export default function FundWallet({
                                 </div>
                             </div>
 
-                            {/* Presets */}
+                            
                             <div className="mt-4 flex flex-wrap gap-2.5">
                                 {presetAmounts.map((value) => {
                                     const selected =
@@ -598,7 +595,7 @@ export default function FundWallet({
                                 })}
                             </div>
                         </>
-                    )}
+                    )} */}
 
                     {/* Error */}
                     {error && (
@@ -635,10 +632,13 @@ export default function FundWallet({
                     type="button"
                     disabled={!canSubmit || loading}
                     onClick={
-                        activeTab === "topup"
-                            ? handleTopUp
-                            : handleSendMoney
+                        handleTopUp
                     }
+                    // onClick={
+                    //     activeTab === "topup"
+                    //         ? handleTopUp
+                    //         : handleSendMoney
+                    // }
                     className="flex min-h-[72px] w-full items-center justify-center gap-3 rounded-2xl bg-indigo-500 px-5 py-4 text-lg font-bold text-white shadow-sm transition hover:bg-indigo-600 active:scale-[0.99] disabled:cursor-not-allowed disabled:bg-indigo-300 disabled:text-white/70"
                 >
                     {loading ? (
@@ -664,10 +664,8 @@ export default function FundWallet({
                     )}
                 </button>
 
-                {/* =====================================================
-            RECENT TOP UPS
-        ====================================================== */}
-
+            {/* RECENT TOP UPS */}
+      
                 <section className="overflow-hidden rounded-[26px] border border-gray-200/70 bg-white shadow-sm">
 
                     {/* Header */}
@@ -717,83 +715,6 @@ export default function FundWallet({
                         </div>
                     ) : (
                         <div className="divide-y divide-gray-100">
-
-                            {/* {topUps.map((topUp) => {
-                                const amount = getAmount(topUp.amount);
-
-                                const isSuccessful =
-                                    topUp.status === "successful";
-
-                                return (
-                                    <div
-                                        key={topUp.reference}
-                                        className="flex flex-col gap-4 px-5 py-5 transition hover:bg-gray-50 sm:flex-row sm:items-center sm:justify-between sm:px-6"
-                                    >
-
-                                        
-                                        <div className="flex min-w-0 items-center gap-4">
-
-                                            <div
-                                                className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-full ${isSuccessful
-                                                    ? "bg-green-50 text-green-600"
-                                                    : "bg-amber-50 text-amber-600"
-                                                    }`}
-                                            >
-                                                <AddCardOutlinedIcon
-                                                    sx={{ fontSize: 21 }}
-                                                />
-                                            </div>
-
-                                            <div className="min-w-0">
-
-                                                <div className="flex flex-wrap items-center gap-2">
-
-                                                    <p className="font-semibold text-gray-800">
-                                                        Wallet top up
-                                                    </p>
-
-                                                    <span
-                                                        className={`rounded-full px-2.5 py-1 text-[11px] font-semibold capitalize ${isSuccessful
-                                                            ? "bg-green-50 text-green-700"
-                                                            : "bg-amber-50 text-amber-700"
-                                                            }`}
-                                                    >
-                                                        {topUp.status}
-                                                    </span>
-                                                </div>
-
-                                                <p className="mt-1 truncate text-xs text-gray-500">
-                                                    Ref: {topUp.reference}
-                                                </p>
-
-                                                <p className="mt-1 text-xs text-gray-400">
-                                                    {formatDate(
-                                                        topUp.completed_at ||
-                                                        topUp.created_at
-                                                    )}
-                                                </p>
-                                            </div>
-                                        </div>
-
-                                       
-                                        <div className="flex items-center justify-between gap-4 sm:block sm:text-right">
-
-                                            <p
-                                                className={`text-lg font-bold ${isSuccessful
-                                                    ? "text-gray-900"
-                                                    : "text-gray-500"
-                                                    }`}
-                                            >
-                                                {formatCurrency(amount)}
-                                            </p>
-
-                                            <p className="mt-1 text-xs text-gray-400">
-                                                {topUp.provider}
-                                            </p>
-                                        </div>
-                                    </div>
-                                );
-                            })} */}
                             {topUps.map((topUp) => {
                                 const amount = getAmount(topUp.amount);
 
