@@ -37,3 +37,61 @@ export const getMyDebt = () => {
     "GET"
   );
 };
+
+export interface DebtPayoffPayload {
+  amount: string;
+}
+export interface DebtPayoffResponse {
+  transaction_reference: string;
+  status: string;
+  transaction_type: string;
+  amount: string;
+  to_debt: string;
+  excess_to_credit: string;
+  discount: string,
+  settled: boolean,
+  remaining_debt: string;
+}
+
+export interface DebtSettlementPayload {
+  settlement_offer: string;
+}
+export const payDebt = (payload: DebtPayoffPayload) => {
+  return axiosWithCookies<DebtPayoffResponse>(
+    "/customer/me/debt/pay/",
+    "POST",
+    payload
+  );
+}
+export const settleDebt = (payload: DebtSettlementPayload) => {
+  return axiosWithCookies<DebtPayoffResponse>(
+    "/customer/me/debt/settle/",
+    "POST",
+    payload
+  );
+}
+export interface Lines {
+  debt_id: number;
+  bucket: string;
+  outstanding: string;
+  paid_portion: string;
+  waived_portion: string;
+}
+
+export interface DebtSettlements {
+  reference: string;
+  status: "quoted";
+  quoted_balance: string;
+  settlement_amount: string;
+  discount_amount: string;
+  quoted_at: string;
+  expires_at: string;
+  lines: Lines[]
+}
+
+export const getDebtSettlementOffer = () => {
+  return axiosWithCookies<DebtSettlements[]>(
+    "/customer/me/debt/settlements/",
+    "GET"
+  );
+}

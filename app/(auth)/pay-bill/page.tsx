@@ -16,6 +16,7 @@ import {
 } from "@mui/icons-material";
 
 import { useRouter } from "next/navigation";
+import Buy from "@/app/components/dashboard/test";
 
 type PaymentTab = "buy" | "arrears";
 
@@ -292,11 +293,8 @@ export default function BuyPower() {
                             </p>
                         )}
 
-                    </section>
-
-                    <section className="rounded-[19px] border border-[#edf0f5] bg-white px-3.5 py-3">
-
-                        <h3 className="mb-2 text-[14px] font-semibold text-[#1e293b]">
+                    
+                        <h3 className="mb-2 text-[14px] font-semibold text-[#1e293b] mt-5">
                             Amount
                         </h3>
 
@@ -460,6 +458,10 @@ export default function BuyPower() {
                     </>
                 )}
             </div>
+
+            {/* <div>
+                <Buy />
+            </div> */}
         </main>
     );
 }
