@@ -31,18 +31,18 @@ const services = [
     bgColor: "bg-emerald-50",
     iconColor: "text-emerald-600",
   },
-  {
-    title: "Transfer",
-    href: "/customer/wallet/transfer",
-    icon: SwapHorizRoundedIcon,
-    bgColor: "bg-orange-50",
-    iconColor: "text-orange-500",
-  },
+  // {
+  //   title: "Transfer",
+  //   href: "/customer/wallet/transfer",
+  //   icon: SwapHorizRoundedIcon,
+  //   bgColor: "bg-orange-50",
+  //   iconColor: "text-orange-500",
+  // },
 ];
 
 export default function ServicesCard() {
   return (
-    <section className="mt-6 w-full rounded-[28px] border border-gray-100 bg-white p-5 shadow-sm sm:p-7 lg:p-9">
+    <section className="mt-6 w-full rounded-[20px] border border-gray-100 bg-white p-4 shadow-sm sm:p-5 lg:p-5">
       {/* Header */}
       <div className="mb-7 flex items-center justify-between">
         <div className="flex items-center gap-3 sm:gap-4">
@@ -75,7 +75,7 @@ export default function ServicesCard() {
       </div>
 
       {/* Services Grid */}
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid grid-cols-2 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {services.map((service) => {
           const Icon = service.icon;
 
@@ -83,7 +83,7 @@ export default function ServicesCard() {
             <Link
               key={service.title}
               href={service.href}
-              className="group flex min-w-0 flex-col items-center rounded-2xl border border-transparent px-2 py-4 transition-all duration-200 hover:border-gray-100 hover:bg-gray-50/70 sm:px-3 sm:py-5"
+              className="group flex min-w-0 flex-col items-center rounded-2xl border border-transparent px-2 py-4 transition-all duration-200 bg-gray-100 hover:border-gray-100 hover:bg-gray-50/70 sm:px-3 sm:py-5"
             >
               {/* Icon Box */}
               <div
@@ -95,16 +95,18 @@ export default function ServicesCard() {
                 />
               </div>
 
-              {/* Service Name */}
-              <div className="mt-4 flex w-full items-center justify-center gap-1">
-                <h3 className="truncate text-center text-sm font-semibold text-gray-800 sm:text-base lg:text-lg">
-                  {service.title}
-                </h3>
-              </div>
+              <div className="flex items-center justify-center gap-2">
+                {/* Service Name */}
+                <div className="mt-4 flex w-full items-center justify-center gap-1">
+                  <h3 className="truncate text-center text-sm font-semibold text-gray-800 sm:text-base lg:text-lg">
+                    {service.title}
+                  </h3>
+                </div>
 
-              {/* Small Arrow */}
-              <div className="mt-2 flex h-7 w-7 items-center justify-center rounded-full bg-blue-50 text-blue-600 transition-all duration-200 group-hover:translate-x-1 group-hover:bg-blue-100 sm:h-8 sm:w-8">
-                <ArrowForwardRoundedIcon sx={{ fontSize: 17 }} />
+                {/* Small Arrow */}
+                <div className="mt-2 flex h-7 w-7 items-center justify-center rounded-full bg-blue-50 text-blue-600 transition-all duration-200 group-hover:translate-x-1 group-hover:bg-blue-100 sm:h-8 sm:w-8">
+                  <ArrowForwardRoundedIcon sx={{ fontSize: 17 }} />
+                </div>
               </div>
             </Link>
           );

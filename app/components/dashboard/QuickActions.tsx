@@ -21,12 +21,12 @@ const quickActions = [
     icon: AddCircleOutlineRoundedIcon,
     featured: false,
   },
-  {
-    title: "Scan & pay",
-    href: "/customer/scan-pay",
-    icon: QrCodeScannerRoundedIcon,
-    featured: false,
-  },
+  // {
+  //   title: "Scan & pay",
+  //   href: "/customer/scan-pay",
+  //   icon: QrCodeScannerRoundedIcon,
+  //   featured: false,
+  // },
   {
     title: "View bills",
     href: "/customer/bills",
@@ -50,7 +50,7 @@ export default function QuickActions() {
       </div>
 
       {/* Quick Actions Grid */}
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-4">
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
         {quickActions.map((action) => {
           const Icon = action.icon;
 
@@ -60,7 +60,7 @@ export default function QuickActions() {
               href={action.href}
               className={`
                 group relative flex min-h-[150px] flex-col
-                justify-between overflow-hidden rounded-[22px]
+                justify-between overflow-hidden rounded-[20px]
                 border p-4 transition-all duration-200
                 hover:-translate-y-1 hover:shadow-lg
                 sm:min-h-[165px] sm:p-5

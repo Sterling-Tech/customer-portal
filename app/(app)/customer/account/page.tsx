@@ -272,7 +272,7 @@ export default function AccountDetails() {
         </div>
       </div>
 
-      <div className="mx-auto mt-3 max-w-5xl space-y-4 px-4">
+      <div className="mx-auto mt-3 max-w-7xl space-y-4 px-4">
 
         {/* ================= ACCOUNT CARD ================= */}
 

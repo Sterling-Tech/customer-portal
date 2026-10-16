@@ -12,7 +12,7 @@ import SupportAgentOutlinedIcon from "@mui/icons-material/SupportAgentOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 
 import CloseIcon from "@mui/icons-material/Close";
-import { WorkHistoryOutlined } from "@mui/icons-material";
+import { AccessTimeOutlined, WorkHistoryOutlined } from "@mui/icons-material";
 
 const menuItems = [
   {
@@ -38,13 +38,17 @@ const menuItems = [
   {
     name: "Debts",
     href: "/customer/debts",
-    // icon: <HistoryOutlinedIcon />,
     icon: <WorkHistoryOutlined />,
   },
   {
     name: "My Bills",
     href: "/customer/bills/history",
     icon: <ReceiptLongOutlinedIcon />,
+  },
+  {
+    name: "Access Codes",
+    href: "/customer/access-codes",
+    icon: <AccessTimeOutlined />,
   },
   {
     name: "Support",

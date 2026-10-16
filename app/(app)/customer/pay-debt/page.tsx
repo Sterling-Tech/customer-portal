@@ -171,7 +171,7 @@ export default function ClearArrears() {
           </h1>
         </header>
 
-        <div className="mx-auto max-w-lg px-4 py-8">
+        <div className="mx-auto max-w-5xl px-4 py-8">
           <section className="rounded-[24px] bg-white p-6 text-center shadow-sm">
 
             {/* SUCCESS ICON */}
@@ -337,7 +337,7 @@ export default function ClearArrears() {
         </h1>
       </header>
 
-      <div className="mx-auto w-full max-w-2xl px-3 pb-8 pt-4">
+      <div className="mx-auto w-full max-w-7xl px-3 pb-8 pt-4">
 
         {/* INFORMATION CARD */}
 

@@ -19,6 +19,7 @@ import {
     MyDebtResponse,
     Debt,
 } from "@/app/services/debtService";
+import Link from "next/link";
 
 /* =========================================================
    HELPERS
@@ -330,10 +331,18 @@ export default function DebtPage() {
                 </div>
 
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-                    <LoadingCard />
-                    <LoadingCard />
-                    <LoadingCard />
-                    <LoadingCard />
+                    <div>
+                        <LoadingCard />
+                    </div>
+                    <div>
+                        <LoadingCard />
+                    </div>
+                    <div>
+                        <LoadingCard />
+                    </div>
+                    <div>
+                        <LoadingCard />
+                    </div>
                 </div>
 
                 <div className="mt-8 h-64 animate-pulse rounded-2xl bg-gray-200" />
@@ -585,7 +594,9 @@ export default function DebtPage() {
                 ) : (
                     <div className="space-y-3">
                         {debts.map((debt) => (
-                            <DebtRow key={debt.id} debt={debt} />
+                            <Link key={debt.id} href={`/customer/debts/${debt.id}`} className="block">
+                                <DebtRow key={debt.id} debt={debt} />
+                            </Link>
                         ))}
                     </div>
                 )}

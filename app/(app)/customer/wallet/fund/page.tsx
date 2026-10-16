@@ -51,24 +51,7 @@ export default function FundWalletPage() {
     loadAccount();
   }, []);
 
-  /**
-   * -------------------------------------------------------
-   * Load wallet
-   * -------------------------------------------------------
-   *
-   * /customer/me/wallet/
-   *
-   * returns:
-   *
-   * {
-   *   count,
-   *   next,
-   *   previous,
-   *   results,
-   *   balance
-   * }
-   *
-   */
+  
   useEffect(() => {
     const loadWallet = async () => {
       try {
@@ -105,11 +88,7 @@ export default function FundWalletPage() {
     loadWallet();
   }, []);
 
-  /**
-   * -------------------------------------------------------
-   * Start wallet funding
-   * -------------------------------------------------------
-   */
+  
   const handleTopUp = async ({
     amount,
   }: {

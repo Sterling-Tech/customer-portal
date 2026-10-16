@@ -322,8 +322,10 @@ export default function DebtSummaryCards({
           }
           cardBg={
             hasOutstandingDebt
-              ? "bg-gradient-to-br from-orange-50/70 to-white"
-              : "bg-gradient-to-br from-green-50/70 to-white"
+              ? "bg-kind-of-orange-50"
+              // ? "bg-gradient-to-br from-orange-50/70 to-white"
+              : "bg-white/70"
+              // : "bg-gradient-to-br from-green-50/70 to-white"
           }
           valueColor={
             hasOutstandingDebt
@@ -345,7 +347,8 @@ export default function DebtSummaryCards({
           }
           iconBg="bg-emerald-50"
           iconColor="text-emerald-500"
-          cardBg="bg-gradient-to-br from-emerald-50/70 to-white"
+          // cardBg="bg-gradient-to-br from-emerald-50/70 to-white"
+          cardBg="bg-gray-50"
           valueColor="text-emerald-600"
         />
 
@@ -390,6 +393,7 @@ export default function DebtSummaryCards({
           iconBg="bg-indigo-50"
           iconColor="text-indigo-500"
           cardBg="bg-gradient-to-br from-indigo-50/70 to-white"
+          // cardBg="bg-indigo-50"
           valueColor="text-indigo-600"
         />
       </div>

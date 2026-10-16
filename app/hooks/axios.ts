@@ -23,11 +23,39 @@ const axiosInstance = axios.create({
 });
 
 // Attach access token to requests
+// axiosInstance.interceptors.request.use(
+//   async (config) => {
+//     const session = await getSession();
+
+//     const accessToken = session?.user?.access;
+
+//     if (accessToken) {
+//       config.headers.Authorization = `Bearer ${accessToken}`;
+//     }
+
+//     return config;
+//   },
+//   (error) => Promise.reject(error)
+// );
 axiosInstance.interceptors.request.use(
   async (config) => {
-    const session = await getSession();
+    let accessToken: string | null | undefined;
 
-    const accessToken = session?.user?.access;
+    if (typeof window !== "undefined") {
+      const pathname = window.location.pathname;
+
+      if (pathname.startsWith("/security")) {
+        accessToken = localStorage.getItem("security_access");
+      } else if (pathname.startsWith("/customer")) {
+        accessToken = localStorage.getItem("customer_access");
+      }
+    }
+
+    // Fall back to NextAuth for routes using session authentication.
+    if (!accessToken) {
+      const session = await getSession();
+      accessToken = session?.user?.access;
+    }
 
     if (accessToken) {
       config.headers.Authorization = `Bearer ${accessToken}`;

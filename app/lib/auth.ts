@@ -118,7 +118,8 @@ export const authOptions: NextAuthOptions = {
     error: "/login",
   },
 
-  secret: process.env.AUTH_SECRET,
+  // secret: process.env.AUTH_SECRET,
+  secret: process.env.NEXTAUTH_SECRET,
 
   debug: process.env.NODE_ENV === "development",
 };

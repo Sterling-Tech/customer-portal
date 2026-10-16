@@ -270,13 +270,9 @@ export default function FundWallet({
     
     return (
         <div className="min-h-screen">
-            <div className="mx-auto w-full max-w-7xl space-y-5 px-4 py-6 sm:px-6 lg:py-8">
+            <div className="w-full space-y-5 px-4 py-6 sm:px-6 lg:py-8">
 
-                {/* =====================================================
-            PAGE HEADER
-        ====================================================== */}
-
-                <div className="flex items-center justify-between gap-3">
+                <div className="flex items-center justify-between gap-3 bg-white/50 px-4 py-2 shadow-sm lg:rounded-sm">
                     <div className="flex min-w-0 items-center gap-4">
 
                         {/* Back */}
@@ -378,10 +374,10 @@ export default function FundWallet({
                         {/* Top ups */}
                         <div className="min-w-0 px-3">
                             <p className="text-base font-semibold sm:text-lg">
-                                {topUps.length}
+                                {topUps.filter((topUp) => topUp.status === "successful").length}
                             </p>
                             <p className="mt-1 truncate text-xs text-gray-400 sm:text-sm">
-                                Top ups
+                                Successfull top-ups
                             </p>
                         </div>
 
@@ -402,7 +398,7 @@ export default function FundWallet({
             FORM CARD
         ====================================================== */}
 
-                <section className="rounded-[26px] border border-gray-200/70 bg-white p-5 shadow-sm sm:p-6">
+                <section className="rounded-[20px] border border-gray-200/70 bg-white p-5 shadow-sm sm:p-6">
 
                     <div className="mb-6 grid grid-cols-2 rounded-2xl bg-[#EDF1FA] p-1.5">
 

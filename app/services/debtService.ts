@@ -37,6 +37,12 @@ export const getMyDebt = () => {
     "GET"
   );
 };
+export const getDebtById = (id: number) => {
+  return axiosWithCookies<Debt>(
+    `/customer/me/debt/${id}/`,
+    "GET"
+  );
+};
 
 export interface DebtPayoffPayload {
   amount: string;

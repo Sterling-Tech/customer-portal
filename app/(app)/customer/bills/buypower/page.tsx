@@ -15,6 +15,7 @@ import {
   CheckCircleOutlined,
   ElectricMeterOutlined,
   Refresh,
+  Person2Outlined,
 } from "@mui/icons-material";
 import {
   Dialog,
@@ -28,7 +29,7 @@ import {
 
 import { useRouter } from "next/navigation";
 
-import { getAccountDetails } from "@/app/services/accountService";
+import { AccountResponse, getAccountDetails } from "@/app/services/accountService";
 import {
   getQuote,
   vend,
@@ -61,9 +62,7 @@ const MAX_POLL_ATTEMPTS = 30;
 export default function BuyPower() {
   const router = useRouter();
 
-  const [meterNumber, setMeterNumber] = useState("");
-  const [accountNumber, setAccountNumber] = useState("");
-  const [walletBalance, setWalletBalance] = useState("0");
+  const [accountDetails, setAccountDetails] = useState<AccountResponse | null>(null);
 
   const [activeTab, setActiveTab] = useState<PaymentTab>("buy");
   const [amount, setAmount] = useState("1000");
@@ -84,10 +83,7 @@ export default function BuyPower() {
       setLoadingAccount(true);
 
       const response = await getAccountDetails();
-
-      setAccountNumber(response.personal.account_number);
-      setMeterNumber(response.personal.meter_number);
-      setWalletBalance(response.wallet?.balance ?? "0");
+      setAccountDetails(response);
     } catch (error) {
       console.error("Account information not found:", error);
     } finally {
@@ -120,50 +116,49 @@ export default function BuyPower() {
     setPaymentStatus("idle");
   };
 
-  const handleGetQuote = async () => {
-    setQuoteError("");
-    setPaymentError("");
-    setQuote(null);
+  // const handleGetQuote = async () => {
+  //   setQuoteError("");
+  //   setPaymentError("");
+  //   setQuote(null);
+  //   const numericAmount = Number(amount);
 
-    const numericAmount = Number(amount);
+  //   if (!numericAmount || numericAmount <= 0) {
+  //     setQuoteError("Please enter a valid amount.");
+  //     return;
+  //   }
 
-    if (!numericAmount || numericAmount <= 0) {
-      setQuoteError("Please enter a valid amount.");
-      return;
-    }
+  //   if (numericAmount < 100) {
+  //     setQuoteError("Minimum payment amount is ₦100.");
+  //     return;
+  //   }
 
-    if (numericAmount < 100) {
-      setQuoteError("Minimum payment amount is ₦100.");
-      return;
-    }
+  //   if (numericAmount > Number(walletBalance)) {
+  //     setQuoteError("Insufficient wallet balance.");
+  //     return;
+  //   }
 
-    if (numericAmount > Number(walletBalance)) {
-      setQuoteError("Insufficient wallet balance.");
-      return;
-    }
+  //   try {
+  //     setQuoteLoading(true);
+  //     setPaymentStatus("quoting");
 
-    try {
-      setQuoteLoading(true);
-      setPaymentStatus("quoting");
+  //     const response = await getQuote(amount);
 
-      const response = await getQuote(amount);
+  //     console.log("VEND QUOTE:", response);
+  //     setQuote(response);
+  //     setPaymentStatus("ready");
+  //   } catch (error) {
+  //     console.error("Failed to get vend quote:", error);
+  //     setQuoteError(
+  //       error instanceof Error
+  //         ? error.message
+  //         : "Unable to calculate your payment. Please try again."
+  //     );
 
-      console.log("VEND QUOTE:", response);
-      setQuote(response);
-      setPaymentStatus("ready");
-    } catch (error) {
-      console.error("Failed to get vend quote:", error);
-      setQuoteError(
-        error instanceof Error
-          ? error.message
-          : "Unable to calculate your payment. Please try again."
-      );
-
-      setPaymentStatus("idle");
-    } finally {
-      setQuoteLoading(false);
-    }
-  };
+  //     setPaymentStatus("idle");
+  //   } finally {
+  //     setQuoteLoading(false);
+  //   }
+  // };
 
   const pollVendStatus = async (
     reference: string
@@ -252,7 +247,7 @@ export default function BuyPower() {
       return;
     }
 
-    if (numericAmount > Number(walletBalance)) {
+    if (numericAmount > Number(accountDetails?.wallet.balance ?? 0)) {
       setPaymentError("Insufficient wallet balance.");
       return;
     }
@@ -461,6 +456,11 @@ export default function BuyPower() {
     );
   }
 
+  const meterTypeLabel =
+  typeof accountDetails?.meta?.metering_type === "string"
+    ? accountDetails.meta.metering_type
+    : accountDetails?.meta?.metering_type?.name ?? "Meter type not set";
+
   /* =========================================================
      MAIN UI
   ========================================================= */
@@ -481,9 +481,10 @@ export default function BuyPower() {
         </button>
 
         <h1 className="text-[16px] font-bold text-[#1e293b]">
-          {activeTab === "buy"
+          {/* {activeTab === "buy"
             ? "Pay electricity"
-            : "Clear arrears"}
+            : "Clear arrears"} */}
+          Pay electricity
         </h1>
       </header>
 
@@ -509,7 +510,7 @@ export default function BuyPower() {
 
               <h2 className="mt-1 text-[21px] font-bold leading-6 text-[#1e293b]">
                 ₦{formatAmount(
-                  walletBalance
+                  accountDetails?.wallet?.balance ?? "0"
                 )}
               </h2>
 
@@ -532,7 +533,7 @@ export default function BuyPower() {
 
         {/* TABS */}
 
-        <section className="flex h-[58px] items-center gap-1 rounded-[15px] bg-[#edf0f8] p-2">
+        {/* <section className="flex h-[58px] items-center gap-1 rounded-[15px] bg-[#edf0f8] p-2">
 
           <button
             type="button"
@@ -563,40 +564,49 @@ export default function BuyPower() {
               : "text-[#718096] hover:text-[#1e293b]"
               }`}
           >
-            Clear arrears
           </button>
-        </section>
+        </section> */}
 
         {/* FORM */}
 
         <section className="rounded-[19px] border border-[#edf0f5] bg-white px-3.5 py-3">
 
-          <h3 className="mb-2 text-[14px] font-semibold text-[#1e293b]">
-            Meter or account number
-          </h3>
-
-          <div className="flex h-[43px] min-w-0 items-center gap-2 rounded-[13px] border border-[#edf0f5] bg-[#f7f8fc] px-3">
-
-            <Bolt
-              sx={{
-                fontSize: 18,
-                color: "#8995a8",
-              }}
-            />
-
-            <input
-              type="text"
-              value={meterNumber}
-              onChange={(e) => {
-                setMeterNumber(
-                  e.target.value
-                );
-                setPaymentError("");
-              }}
-              placeholder="Enter meter number"
-              className="w-full min-w-0 bg-transparent text-[14px] font-medium text-[#1e293b] outline-none placeholder:text-gray-400"
-            />
-          </div>
+          <section>
+            <h3 className="mb-2 text-[14px] font-semibold text-[#1e293b]">
+              Paying to account
+            </h3>
+            <div>
+              <div className="flex items-center justify-between gap-2">
+                <div className="flex items-center gap-5 rounded-[13px] px-3 py-2">
+                  <Person2Outlined
+                    sx={{ fontSize: 30 }}
+                    className="text-blue-800 bg-blue-100 rounded-full p-[3px]"
+                  />
+                  <div>
+                    <p className="text-[14px] font-medium text-[#1e293b]">
+                      {accountDetails?.personal?.name || "John Doe"}
+                    </p>
+                    <p className="text-[12px] text-[#64748b]">
+                      {accountDetails?.personal?.account_number || "Account number not set"}
+                    </p>
+                  </div>
+                </div>
+                <div>
+                  <CheckCircleOutlined
+                    sx={{ fontSize: 20 }}
+                    className="text-green-600 bg-green-50 rounded-full p-[2px] mt-1"
+                  />
+                </div>
+              </div>
+              
+              <div className="text-[#1e293b] px-3 py-2 mt-2 bg-gray-50 rounded-[13px] text-[13px] space-y-1">
+                <p className="flex items-center justify-between"><span>Meter type</span> <span>{meterTypeLabel}</span></p>
+                <p className="flex items-center justify-between"><span>Address</span> <span>{accountDetails?.location?.address ?? "Address not set"}</span></p>
+                <p className="flex items-center justify-between"><span>District</span> <span>{accountDetails?.location?.district ?? "District not set"}</span></p>
+                <p className="flex items-center justify-between"><span>Tariff</span> <span>{accountDetails?.meta?.tariff ?? "Tariff not set"}</span></p>
+              </div>
+            </div>
+          </section>
 
           <h3 className="mb-2 mt-5 text-[14px] font-semibold text-[#1e293b]">
             Amount
@@ -706,7 +716,7 @@ export default function BuyPower() {
 
               <span className="text-[12px] text-[#64748b]">
                 ₦{formatAmount(
-                  walletBalance
+                  accountDetails?.wallet.balance ?? "0"
                 )}
               </span>
             </button>

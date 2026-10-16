@@ -79,6 +79,7 @@ export interface LoginPayload{
   identifier: string;
   password: string;
 }
+
 export const Login = (payload: LoginPayload) => {
   return axiosWithCookies<AuthResponse>(
     "/customer/auth/login/",
@@ -86,3 +87,35 @@ export const Login = (payload: LoginPayload) => {
     payload
   );
 };
+
+
+export interface SecurityLoginPayload {
+  email: string;
+  password: string;
+}
+
+export interface SecurityLoginUser {
+  [key: string]: unknown;
+}
+
+export interface SecurityLoginResponse {
+  refresh: string;
+  access: string;
+  user: SecurityLoginUser;
+}
+
+export interface SecurityLoginOtpResponse {
+  status: string;
+}
+
+export const securityLogin = (
+  payload: SecurityLoginPayload
+) => {
+  return axiosWithCookies<SecurityLoginResponse>(
+    "/user/login/",
+    "POST",
+    payload
+  );
+};
+
+
