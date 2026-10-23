@@ -45,21 +45,21 @@ export default function GateSignIn({
 
     const [error, setError] = useState("");
 
-    
+
     const handleSubmit = async (
         e: FormEvent<HTMLFormElement>
     ) => {
         e.preventDefault();
-setError("");
+        setError("");
 
         if (!email.trim() || !password) {
             setError("Please enter your email and password.");
             return;
         }
-        
+
         try {
             setLoading(true);
-            
+
             const response = await securityLogin({
                 email: email.trim(),
                 password,
@@ -150,7 +150,7 @@ setError("");
     return (
         <Box className="min-h-screen bg-[#F8FAFC] flex flex-col">
             {/* Top App Bar */}
-            <Box className="flex items-center gap-3 px-4 py-3 bg-white border-b border-gray-100">
+            <Box className="flex items-center gap-3 px-4 py-1s bg-white border-b border-gray-100">
                 <IconButton
                     onClick={() => {
                         if (onBack) {
@@ -184,15 +184,24 @@ setError("");
             </Box>
 
             {/* Main Content */}
-            <Box className="flex-1 flex flex-col items-center px-6 pt-10 pb-8">
+            <Box className="flex-1 flex flex-col items-center px-6 pt-4 pb-8">
                 {/* Shield Icon */}
-                <Box className="relative mb-6">
+                {/* <Box className="relative mb-6">
                     <Box className="absolute inset-0 bg-indigo-100 rounded-full scale-150 opacity-60" />
 
                     <Box className="relative w-16 h-16 bg-[#1E3A5F] rounded-2xl flex items-center justify-center shadow-md">
                         <Shield className="text-white text-3xl" />
                     </Box>
-                </Box>
+                </Box> */}
+                <div className="flex justify-center mb-5">
+                    <div className="h-20 w-32 rounded-xl bg-white border border-gray-200 shadow-sm flex items-center justify-center">
+                        <img
+                            src="/sterlingLogo2.jpeg"
+                            alt="Company logo"
+                            className="h-20 w-20 object-contain"
+                        />
+                    </div>
+                </div>
 
                 <Typography
                     variant="overline"
@@ -326,24 +335,24 @@ setError("");
                             }}
                         />
                     </div>
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            disabled={
-                                loading ||
-                                !email.trim() ||
-                                !password
-                            }
-                            endIcon={
-                                !loading ? (
-                                    <span className="text-lg">→</span>
-                                ) : undefined
-                            }
-                            className="!rounded-full !py-3 !text-base !font-semibold !normal-case !bg-[#6366F1] hover:!bg-[#4F46E5] !shadow-md"
-                        >
-                            {loading ? "Signing in..." : "Sign in"}
-                        </Button>
+                    <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        disabled={
+                            loading ||
+                            !email.trim() ||
+                            !password
+                        }
+                        endIcon={
+                            !loading ? (
+                                <span className="text-lg">→</span>
+                            ) : undefined
+                        }
+                        className="!rounded-full !py-3 !text-base !font-semibold !normal-case !bg-[#6366F1] hover:!bg-[#4F46E5] !shadow-md"
+                    >
+                        {loading ? "Signing in..." : "Sign in"}
+                    </Button>
 
                 </Box>
 
