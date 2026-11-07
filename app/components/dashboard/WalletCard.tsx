@@ -9,6 +9,8 @@ import BoltRoundedIcon from "@mui/icons-material/BoltRounded";
 import { useRouter } from "next/navigation";
 
 import { getAccountDetails } from "@/app/services/accountService";
+import { toast } from "react-toastify";
+import { getErrorMessage } from "@/app/utils/getErrorMessage";
 
 interface WalletCardProps {
   accountName: string;
@@ -56,6 +58,7 @@ export default function WalletCard({
 
       setBalance(response.wallet?.balance ?? "0");
     } catch (error) {
+      toast.error(getErrorMessage(error));
       console.error("Failed to load wallet:", error);
     } finally {
       setLoading(false);
@@ -81,7 +84,8 @@ export default function WalletCard({
           Wallet balance
         </p>
 
-        <button
+        {meterType==="prepaid"?(
+          <button
           type="button"
           onClick={handlePay}
           className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1.5 text-[11px] font-semibold text-white transition hover:bg-white/20 active:scale-95"
@@ -89,11 +93,26 @@ export default function WalletCard({
           <AccountBalanceWalletOutlinedIcon
             sx={{ fontSize: 13 }}
           />
-          Pay
+          buy power
           <ArrowForwardRoundedIcon
             sx={{ fontSize: 12 }}
           />
         </button>
+        ):(
+          <button
+          type="button"
+          onClick={handlePay}
+          className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1.5 text-[11px] font-semibold text-white transition hover:bg-white/20 active:scale-95"
+        >
+          <AccountBalanceWalletOutlinedIcon
+            sx={{ fontSize: 13 }}
+          />
+          Pay bill
+          <ArrowForwardRoundedIcon
+            sx={{ fontSize: 12 }}
+          />
+        </button>
+        )}
       </div>
 
       {/* Wallet Balance */}

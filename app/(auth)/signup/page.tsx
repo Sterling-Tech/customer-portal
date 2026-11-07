@@ -1,8 +1,10 @@
 "use client";
 
 import { signUp } from "@/app/services/authService";
+import { getErrorMessage } from "@/app/utils/getErrorMessage";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
+import { toast } from "react-toastify";
 
 export default function CustomerSignup() {
   const router = useRouter();
@@ -29,40 +31,41 @@ export default function CustomerSignup() {
     });
   };
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
 
-    setError("");
-    setSuccess("");
+  setError("");
+  setSuccess("");
 
-    if (formData.password !== formData.confirm_password) {
-      setError("Passwords do not match.");
-      return;
-    }
+  if (formData.password !== formData.confirm_password) {
+    const message = "Passwords do not match.";
+    setError(message);
+    toast.error(message);
+    return;
+  }
 
-    try {
-      setLoading(true);
+  try {
+    setLoading(true);
 
-      const response = await signUp(formData);
+    const response = await signUp(formData);
 
-      console.log("Signup successful:", response.customer);
+    console.log("Signup successful:", response.customer);
 
-      setSuccess("Account created successfully.");
+    setSuccess("Account created successfully.");
+    toast.success("Account created successfully.");
 
-      // Optional: Redirect to login page after successful signup
-      router.push("/login");
-    } catch (err: any) {
-      const apiError = err.response?.data;
+    router.push("/login");
+  } catch (err: unknown) {
+    console.error("SIGNUP ERROR:", err);
 
-      setError(
-        apiError?.message ||
-          apiError?.detail ||
-          "Unable to create account. Please try again."
-      );
-    } finally {
-      setLoading(false);
-    }
-  };
+    const message = getErrorMessage(err);
+
+    setError(message);
+    toast.error(message);
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <main className="min-h-screen bg-[#f7f8fc] flex items-center justify-center px-4 py-8">

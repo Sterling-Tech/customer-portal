@@ -6,6 +6,9 @@ import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { KeyRounded } from "@mui/icons-material";
+import { toast } from "react-toastify";
+import { getErrorMessage } from "@/app/utils/getErrorMessage";
+import { Login } from "@/app/services/authService";
 
 
 export default function CustomerLogin() {
@@ -23,47 +26,115 @@ export default function CustomerLogin() {
   // HANDLE LOGIN
   // ==========================
 
-  const handleSubmit = async (
-    e: FormEvent<HTMLFormElement>
-  ) => {
-    e.preventDefault();
 
-    setError("");
+  // const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
 
-    if (!accountNumber.trim() || !password) {
-      setError("Please enter your account number and password.");
+  //   setError("");
+
+  //   if (!accountNumber.trim() || !password) {
+  //     const message = "Please enter your account number and password.";
+  //     setError(message);
+  //     return;
+  //   }
+
+  //   try {
+  //     setLoading(true);
+
+  //     const response = await Login({
+  //       identifier: accountNumber.trim(),
+  //       password,
+  //     });
+
+  //     console.log("CUSTOMER LOGIN RESPONSE:", response);
+
+  //     if (!response?.access || !response?.refresh) {
+  //       const message = "Invalid login response. Please try again.";
+  //       setError(message);
+  //       toast.error(message);
+  //       return;
+  //     }
+
+  //     // Save authentication details
+  //     sessionStorage.setItem("customer_access", response.access);
+  //     sessionStorage.setItem("customer_refresh", response.refresh);
+  //     sessionStorage.setItem(
+  //       "customer",
+  //       JSON.stringify(response.customer)
+  //     );
+
+  //     toast.success("Login successful!");
+
+  //     // Navigate to dashboard
+  //     router.replace("/customer/dashboard");
+
+  //   } catch (err: unknown) {
+  //     console.error("CUSTOMER LOGIN ERROR:", err);
+
+  //     const message = getErrorMessage(err);
+
+  //     setError(message);
+  //     toast.error(message);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
+
+  setError("");
+
+  if (!accountNumber.trim() || !password) {
+    const message = "Please enter your account number and password.";
+    setError(message);
+    return;
+  }
+
+  try {
+    setLoading(true);
+
+    const result = await signIn("credentials", {
+      identifier: accountNumber.trim(),
+      password,
+      redirect: false,
+    });
+
+    console.log("NEXTAUTH LOGIN RESULT:", result);
+
+    if (result?.ok && !result.error) {
+      toast.success("Login successful!");
+
+      router.replace("/customer/dashboard");
+      router.refresh();
+
       return;
     }
 
-    try {
-      setLoading(true);
+    let message = "Unable to log in. Please try again.";
 
-      const result = await signIn("credentials", {
-        identifier: accountNumber.trim(),
-        password,
-        redirect: false,
-      });
-
-      console.log("NEXTAUTH SIGN IN RESULT:", result);
-
-      if (result?.ok) {
-        router.replace("/customer/dashboard");
-        router.refresh();
-        return;
-      }
-
-      if (result?.error && result.error !== "undefined") {
-        setError(result.error);
-        return;
-      }
-
-      setError("Unable to log in. Please try again.");
-    } catch {
-      setError("Unable to log in. Please try again.");
-    } finally {
-      setLoading(false);
+    if (result?.error === "PASSWORD_EXPIRED") {
+      message = "Your password has expired. Please reset your password.";
+    } else if (result?.error === "CredentialsSignin") {
+      message = "Invalid account number or password.";
+    } else if (result?.error) {
+      message = result.error;
     }
-  };
+
+    setError(message);
+    toast.error(message);
+
+  } catch (err) {
+    console.error("LOGIN ERROR:", err);
+
+    const message = getErrorMessage(err);
+
+    setError(message);
+    toast.error(message);
+
+  } finally {
+    setLoading(false);
+  }
+};
 
   // ==========================
   // UI
@@ -156,19 +227,6 @@ export default function CustomerLogin() {
             </button>
           </div>
 
-          {/* Forgot Password */}
-
-          {/* <div className="flex justify-end">
-            <Link
-              href="/forgot-password"
-              className="text-xs font-medium text-[#2563eb] hover:underline"
-            >
-              Forgot password?
-            </Link>
-          </div> */}
-
-          {/* Submit */}
-
           <button
             type="submit"
             disabled={loading}
@@ -198,7 +256,7 @@ export default function CustomerLogin() {
           onClick={() => router.push("/access-code")}
           className="w-full h-12 rounded-full bg-white border border-[#dce1e8] flex items-center justify-center gap-2 text-sm font-semibold text-[#1e293b] hover:bg-gray-50 transition"
         >
-          <KeyRounded className="text-blue-800 mr-3 hover:bg-indigo-800 hover:rounded-full hover:text-white hover:scale-110 transition-transform duration-200"/>
+          <KeyRounded className="text-blue-800 mr-3 hover:bg-indigo-800 hover:rounded-full hover:text-white hover:scale-110 transition-transform duration-200" />
 
           <p className="font-bold text-lg">Get access <span className="text-black/60 ml-3 font-light">Security</span></p>
         </button>

@@ -16,7 +16,6 @@ import {
 } from "@mui/icons-material";
 
 import { useRouter } from "next/navigation";
-import Buy from "@/app/components/dashboard/test";
 
 type PaymentTab = "buy" | "arrears";
 

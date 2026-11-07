@@ -44,14 +44,11 @@ export default async function CustomerDashboard() {
           meterType={customer?.metering_type?.name ?? "—"}
         />
 
+        <QuickActions />
         <div className="mt-5">
           <DebtSummaryCards />
         </div>
-
-        <QuickActions />
-
         <ServicesCard />
-
         <RecentTransactions />
       </div>
     </div>

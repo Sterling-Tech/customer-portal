@@ -169,7 +169,7 @@ export default function AccessCodePage() {
       {/* HEADER */}
       {/* ========================= */}
 
-      <Box sx={{ mb: 3 }}>
+      <Box sx={{ mb: 3 }} className="flex items-center justify-between gap-3 shadow-sm rounded-lg border border-gray-100 bg-white p-4">
         <div>
           <Typography
             sx={{ fontWeight: 700 }}
@@ -179,7 +179,8 @@ export default function AccessCodePage() {
           </Typography>
 
           <Typography
-            sx={{ fontSize: 13, color: "text.secondary" }}
+            sx={{ fontSize: 13}}
+            className="text-sm text-indigo-500"
           >
             Verify visitor access codes and
             admit visitors at the gate.
@@ -215,10 +216,13 @@ export default function AccessCodePage() {
             <Stack
               direction="row"
               sx={{ spacing: 3, alignItems: "center" }}
+              className="flex items-center gap-4"
             >
 
               <ConfirmationNumberIcon
-                color="primary"
+                // color="primary"
+                fontSize={"large"}
+                className="text-indigo-500"
               />
 
               <Box>
@@ -248,6 +252,8 @@ export default function AccessCodePage() {
               fullWidth
               label="Access Code"
               placeholder="e.g. 093023"
+              variant="outlined"
+              className="text-indigo-500"
               value={code}
               onChange={(event) => setCode(event.target.value)}
               onKeyDown={handleKeyDown}
@@ -272,11 +278,13 @@ export default function AccessCodePage() {
                 sm: "row",
               }}
               sx={{ spacing: 2, height: 50 }}
+              className="flex flex-col gap-2 sm:flex-row"
             >
 
               <Button
                 fullWidth
                 variant="outlined"
+                className="border border-indigo-500 border-solid text-indigo-500 hover:bg-indigo-50"
                 onClick={
                   handleVerify
                 }

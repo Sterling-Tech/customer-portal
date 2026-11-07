@@ -16,6 +16,7 @@ import {
   WarningAmberRounded,
 } from "@mui/icons-material";
 import { Bill, BillsResponse, getBills } from "@/app/services/billsService";
+import BillDetails from "@/app/components/bills/BillDetails";
 
 
 
@@ -170,6 +171,8 @@ export default function Bills({ initialData = null }: BillsProps) {
   const [data, setData] = useState<BillsResponse | null>(
     initialData
   );
+
+  const [selectedBill, setSelectedBill] = useState<Bill | null>(null);
 
   const [loading, setLoading] = useState(!initialData);
   const [error, setError] = useState("");
@@ -660,9 +663,14 @@ export default function Bills({ initialData = null }: BillsProps) {
 
                 <tbody>
                   {bills.map((bill) => (
+                    // <tr
+                    //   key={bill.id}
+                    //   className="border-b border-gray-100 last:border-0 hover:bg-gray-50"
+                    // >
                     <tr
                       key={bill.id}
-                      className="border-b border-gray-100 last:border-0 hover:bg-gray-50"
+                      onClick={() => setSelectedBill(bill)}
+                      className="cursor-pointer border-b border-gray-100 last:border-0 hover:bg-indigo-50/50 transition-colors"
                     >
                       <td className="px-5 py-4">
                         <p className="font-semibold text-gray-800">
@@ -737,9 +745,14 @@ export default function Bills({ initialData = null }: BillsProps) {
             ============================================= */}
             <div className="divide-y divide-gray-100 md:hidden">
               {bills.map((bill) => (
+                // <div
+                //   key={bill.id}
+                //   className="p-5"
+                // >
                 <div
                   key={bill.id}
-                  className="p-5"
+                  onClick={() => setSelectedBill(bill)}
+                  className="cursor-pointer p-5 transition hover:bg-gray-50"
                 >
                   {/* Header */}
                   <div className="flex items-start justify-between gap-3">
@@ -878,6 +891,11 @@ export default function Bills({ initialData = null }: BillsProps) {
           </>
         )}
       </section>
+
+      <BillDetails
+        bill={selectedBill}
+        onClose={() => setSelectedBill(null)}
+      />
     </section>
   );
 }

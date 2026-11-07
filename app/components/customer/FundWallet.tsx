@@ -39,35 +39,35 @@ type ActiveTab = "topup" | "transfer";
 
 const presetAmounts = [1000, 2000, 5000, 10000, 20000];
 export const getStatusStyles = (
-        status: WalletHistory["status"]
-    ) => {
-        switch (status) {
-            case "successful":
-                return {
-                    badge: "bg-green-50 text-green-700",
-                    icon: "bg-green-50 text-green-600",
-                };
+    status: WalletHistory["status"]
+) => {
+    switch (status) {
+        case "successful":
+            return {
+                badge: "bg-green-50 text-green-700",
+                icon: "bg-green-50 text-green-600",
+            };
 
-            case "pending":
-                return {
-                    badge: "bg-amber-50 text-amber-700",
-                    icon: "bg-amber-50 text-amber-600",
-                };
+        case "pending":
+            return {
+                badge: "bg-amber-50 text-amber-700",
+                icon: "bg-amber-50 text-amber-600",
+            };
 
-            case "abandoned":
-                return {
-                    badge: "bg-red-50 text-red-700",
-                    icon: "bg-red-50 text-red-600",
-                };
+        case "abandoned":
+            return {
+                badge: "bg-red-50 text-red-700",
+                icon: "bg-red-50 text-red-600",
+            };
 
-            default:
-                return {
-                    badge: "bg-gray-50 text-gray-700",
-                    icon: "bg-gray-50 text-gray-600",
-                };
-        }
-    };
-    
+        default:
+            return {
+                badge: "bg-gray-50 text-gray-700",
+                icon: "bg-gray-50 text-gray-600",
+            };
+    }
+};
+
 export default function FundWallet({
     balance,
     accountName,
@@ -80,15 +80,11 @@ export default function FundWallet({
     onSendMoney,
 }: FundWalletProps) {
     const router = useRouter();
-
     const [activeTab, setActiveTab] = useState<ActiveTab>("topup");
-
     const [amount, setAmount] = useState("");
     const [recipientWalletId, setRecipientWalletId] = useState("");
-
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
-
     const numericAmount = Number(amount);
 
     /* ---------------------------------------------
@@ -124,17 +120,17 @@ export default function FundWallet({
      * Change tab
      * --------------------------------------------- */
 
-    const handleTabChange = (tab: ActiveTab) => {
-        setActiveTab(tab);
+    // const handleTabChange = (tab: ActiveTab) => {
+    //     setActiveTab(tab);
 
-        setError("");
+    //     setError("");
 
-        // Keep amount when switching tabs if desired.
-        // Clear recipient when going back to top up.
-        if (tab === "topup") {
-            setRecipientWalletId("");
-        }
-    };
+    //     // Keep amount when switching tabs if desired.
+    //     // Clear recipient when going back to top up.
+    //     if (tab === "topup") {
+    //         setRecipientWalletId("");
+    //     }
+    // };
 
     /* ---------------------------------------------
      * Amount input
@@ -267,12 +263,13 @@ export default function FundWallet({
             : transferValid;
 
 
-    
+
     return (
         <div className="min-h-screen">
-            <div className="w-full space-y-5 px-4 py-6 sm:px-6 lg:py-8">
+            {/* <div className="w-full space-y-5 px-4 py-4 sm:px-6 lg:py-2"> */}
+            <div className="w-full space-y-4 px-4 ">
 
-                <div className="flex items-center justify-between gap-3 bg-white/50 px-4 py-2 shadow-sm lg:rounded-sm">
+                <div className="flex items-center justify-between gap-3 bg-white/50 px-4 py-1 shadow-sm lg:rounded-md">
                     <div className="flex min-w-0 items-center gap-4">
 
                         {/* Back */}
@@ -280,14 +277,14 @@ export default function FundWallet({
                             type="button"
                             onClick={() => router.back()}
                             aria-label="Go back"
-                            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-700 shadow-sm transition hover:bg-gray-50"
+                            className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-700 shadow-sm transition hover:bg-gray-50"
                         >
                             <ArrowBackRoundedIcon />
                         </button>
 
                         {/* Title */}
                         <div className="min-w-0">
-                            <h1 className="truncate text-2xl font-bold tracking-tight text-[#172033] sm:text-3xl">
+                            <h1 className="truncate text-lg font-bold tracking-tight text-[#172033] sm:text-2xl">
                                 Fund wallet
                             </h1>
 
@@ -307,7 +304,7 @@ export default function FundWallet({
                         onClick={() =>
                             router.push("/customer/transactions")
                         }
-                        className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-gray-200 bg-white text-indigo-500 shadow-sm transition hover:bg-indigo-50"
+                        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-gray-200 bg-white text-indigo-500 shadow-sm transition hover:bg-indigo-50"
                     >
                         <AccessTimeOutlinedIcon />
                     </button>
@@ -317,11 +314,11 @@ export default function FundWallet({
             WALLET CARD
         ====================================================== */}
 
-                <section className="relative overflow-hidden rounded-[28px] bg-[#15161D] p-5 text-white shadow-[0_10px_30px_rgba(15,23,42,0.15)] sm:p-6">
+                <section className="relative overflow-hidden rounded-[20px] bg-blue-800 p-5 text-white shadow sm:p-6">
 
                     {/* Header */}
                     <div className="flex items-center justify-between">
-                        <p className="text-sm font-semibold text-gray-400 sm:text-base">
+                        <p className="text-sm font-semibold text-white/80 sm:text-base">
                             Wallet balance
                         </p>
 
@@ -339,17 +336,17 @@ export default function FundWallet({
                     </div>
 
                     {/* Balance */}
-                    <h2 className="mt-1 text-4xl font-bold tracking-tight sm:text-5xl">
+                    <h2 className="mt-1 text-xl font-bold tracking-tight sm:text-3xl">
                         {formatCurrency(balance)}
                     </h2>
 
                     {/* Account */}
                     <div className="mt-4">
-                        <p className="text-sm text-gray-400">
+                        <p className="text-sm text-white/80">
                             {accountName} · A/C
                         </p>
 
-                        <p className="text-sm tracking-wide text-gray-400">
+                        <p className="text-sm tracking-wide text-white/80">
                             {accountNumber}
                         </p>
                     </div>
@@ -366,7 +363,7 @@ export default function FundWallet({
                                 {formatCurrency(addedThisMonth)}
                             </p>
 
-                            <p className="mt-1 truncate text-xs text-gray-400 sm:text-sm">
+                            <p className="mt-1 truncate text-xs text-white/80 sm:text-sm">
                                 Added this month
                             </p>
                         </div>
@@ -376,7 +373,7 @@ export default function FundWallet({
                             <p className="text-base font-semibold sm:text-lg">
                                 {topUps.filter((topUp) => topUp.status === "successful").length}
                             </p>
-                            <p className="mt-1 truncate text-xs text-gray-400 sm:text-sm">
+                            <p className="mt-1 truncate text-xs text-white/80 sm:text-sm">
                                 Successfull top-ups
                             </p>
                         </div>
@@ -387,7 +384,7 @@ export default function FundWallet({
                                 {currency}
                             </p>
 
-                            <p className="mt-1 text-xs text-gray-400 sm:text-sm">
+                            <p className="mt-1 text-xs text-white/80 sm:text-sm">
                                 Currency
                             </p>
                         </div>
@@ -398,18 +395,16 @@ export default function FundWallet({
             FORM CARD
         ====================================================== */}
 
-                <section className="rounded-[20px] border border-gray-200/70 bg-white p-5 shadow-sm sm:p-6">
+                <section className="rounded-[20px] border border-gray-200/70 bg-white p-3 shadow sm:p-4">
 
-                    <div className="mb-6 grid grid-cols-2 rounded-2xl bg-[#EDF1FA] p-1.5">
+                    <div className="mb-6 grid grid-cols-1 rounded-xl bg-[#EDF1FA] p-1.5">
 
                         {/* Top Up */}
                         <button
                             type="button"
-                            onClick={() => handleTabChange("topup")}
-                            className={`rounded-xl px-3 py-3 text-sm font-semibold transition-all sm:text-base ${activeTab === "topup"
-                                ? "bg-white text-indigo-600 shadow-sm"
-                                : "text-gray-500 hover:text-gray-800"
-                                }`}
+                            // onClick={() => handleTabChange("topup")}
+                            className="rounded-lg px-3 py-2 text-sm font-semibold transition-all sm:text-base
+                                bg-white text-indigo-600 shadow-sm hover:text-gray-800"
                         >
                             Top up my wallet
                         </button>
@@ -431,73 +426,73 @@ export default function FundWallet({
               TOP UP CONTENT
           ================================================== */}
 
-                    {activeTab === "topup" && (
-                        <>
-                            {/* Title */}
-                            <div className="mb-5 flex items-center gap-3">
-                                <PaymentsOutlinedIcon
-                                    className="text-indigo-500"
-                                    sx={{ fontSize: 24 }}
-                                />
 
-                                <h2 className="text-xl font-bold text-[#172033]">
-                                    How much?
-                                </h2>
-                            </div>
+                    <>
+                        {/* Title */}
+                        <div className="mb-5 flex items-center gap-3">
+                            <PaymentsOutlinedIcon
+                                className="text-indigo-500"
+                                sx={{ fontSize: 24 }}
+                            />
 
-                            {/* Amount label */}
-                            <label
-                                htmlFor="wallet-amount"
-                                className="mb-2 block text-sm font-medium text-gray-500 sm:text-base"
-                            >
-                                Amount
-                            </label>
+                            <h2 className="text-xl font-bold text-[#172033]">
+                                How much?
+                            </h2>
+                        </div>
 
-                            {/* Amount input */}
-                            <div className="flex h-[82px] items-center gap-2 rounded-2xl border border-gray-100 bg-[#F6F8FC] px-4 transition focus-within:border-indigo-300 focus-within:ring-2 focus-within:ring-indigo-100 sm:px-5">
+                        {/* Amount label */}
+                        <label
+                            htmlFor="wallet-amount"
+                            className="mb-2 block text-sm font-medium text-gray-500 sm:text-base"
+                        >
+                            Amount
+                        </label>
 
-                                <span className="text-2xl font-semibold text-gray-500 sm:text-3xl">
-                                    ₦
-                                </span>
+                        {/* Amount input */}
+                        <div className="flex h-[52px] items-center gap-2 rounded-2xl border border-gray-100 bg-[#F6F8FC] px-4 transition focus-within:border-indigo-300 focus-within:ring-2 focus-within:ring-indigo-100 sm:px-5">
 
-                                <input
-                                    id="wallet-amount"
-                                    type="number"
-                                    min="100"
-                                    step="0.01"
-                                    inputMode="decimal"
-                                    placeholder="0"
-                                    value={amount}
-                                    onChange={handleAmountChange}
-                                    className="h-full w-full min-w-0 bg-transparent text-3xl font-bold text-gray-700 outline-none placeholder:text-gray-400 sm:text-4xl"
-                                />
-                            </div>
+                            <span className="text-2xl font-semibold text-gray-500 sm:text-2xl">
+                                ₦
+                            </span>
 
-                            {/* Presets */}
-                            <div className="mt-4 flex flex-wrap gap-2.5">
-                                {presetAmounts.map((value) => {
-                                    const selected =
-                                        numericAmount === value;
+                            <input
+                                id="wallet-amount"
+                                type="number"
+                                min="100"
+                                step="0.01"
+                                inputMode="decimal"
+                                placeholder="0"
+                                value={amount}
+                                onChange={handleAmountChange}
+                                className="h-full w-full min-w-0 bg-transparent text-xl font-bold text-gray-700 outline-none placeholder:text-gray-400 sm:text-3xl"
+                            />
+                        </div>
 
-                                    return (
-                                        <button
-                                            key={value}
-                                            type="button"
-                                            onClick={() =>
-                                                handlePresetAmount(value)
-                                            }
-                                            className={`rounded-full border px-4 py-2.5 text-sm font-semibold transition sm:text-base ${selected
-                                                ? "border-indigo-400 bg-indigo-50 text-indigo-600"
-                                                : "border-gray-200 bg-white text-gray-700 hover:border-indigo-300 hover:bg-indigo-50"
-                                                }`}
-                                        >
-                                            {formatCurrency(value)}
-                                        </button>
-                                    );
-                                })}
-                            </div>
-                        </>
-                    )}
+                        {/* Presets */}
+                        <div className="mt-4 flex flex-wrap gap-2.5">
+                            {presetAmounts.map((value) => {
+                                const selected =
+                                    numericAmount === value;
+
+                                return (
+                                    <button
+                                        key={value}
+                                        type="button"
+                                        onClick={() =>
+                                            handlePresetAmount(value)
+                                        }
+                                        className={`rounded-full border px-3 py-2 text-sm font-semibold transition sm:text-base ${selected
+                                            ? "border-indigo-400 bg-indigo-50 text-indigo-600"
+                                            : "border-gray-200 bg-white text-gray-700 hover:border-indigo-300 hover:bg-indigo-50"
+                                            }`}
+                                    >
+                                        {formatCurrency(value)}
+                                    </button>
+                                );
+                            })}
+                        </div>
+                    </>
+
 
                     {/* =================================================
               SEND TO SOMEONE CONTENT
@@ -601,7 +596,7 @@ export default function FundWallet({
                     )}
                 </section>
 
-                {activeTab === "transfer" && (
+                {/* {activeTab === "transfer" && (
                     <div className="flex items-start gap-3 px-1 text-sm text-gray-500 sm:text-base">
 
                         <InfoOutlinedIcon
@@ -618,7 +613,7 @@ export default function FundWallet({
                                 : "Enter the recipient's wallet ID"}
                         </p>
                     </div>
-                )}
+                )} */}
 
                 {/* =====================================================
             ACTION BUTTON
@@ -635,34 +630,30 @@ export default function FundWallet({
                     //         ? handleTopUp
                     //         : handleSendMoney
                     // }
-                    className="flex min-h-[72px] w-full items-center justify-center gap-3 rounded-2xl bg-indigo-500 px-5 py-4 text-lg font-bold text-white shadow-sm transition hover:bg-indigo-600 active:scale-[0.99] disabled:cursor-not-allowed disabled:bg-indigo-300 disabled:text-white/70"
+                    className="flex min-h-[42px] w-full items-center justify-center gap-3 rounded-2xl bg-indigo-500 px-5 py-4 text-lg font-bold text-white shadow transition hover:bg-indigo-600 active:scale-[0.99] disabled:cursor-not-allowed disabled:bg-indigo-300 disabled:text-white/80"
                 >
                     {loading ? (
                         <>
-                            <span className="h-5 w-5 animate-spin rounded-full border-2 border-white/40 border-t-white" />
+                            <span className="h-5 w-5 animate-spin rounded-full border-2 border-white/80 border-t-white">
 
-                            {activeTab === "topup"
+                            {/* {activeTab === "topup"
                                 ? "Opening payment..."
-                                : "Sending..."}
-                        </>
-                    ) : activeTab === "topup" ? (
+                                : "Sending..."} */}
+                            Opening payment...
+                            </span>
+                        </>                  
+                    ) : (
                         <>
                             <AddCardOutlinedIcon />
 
                             Add money
                         </>
-                    ) : (
-                        <>
-                            <SendRoundedIcon />
-
-                            Send money
-                        </>
                     )}
                 </button>
 
-            {/* RECENT TOP UPS */}
-      
-                <section className="overflow-hidden rounded-[26px] border border-gray-200/70 bg-white shadow-sm">
+                {/* RECENT TOP UPS */}
+
+                <section className="overflow-hidden rounded-[20px] border border-gray-200/70 bg-white shadow">
 
                     {/* Header */}
                     <div className="flex items-center justify-between gap-3 border-b border-gray-100 px-5 py-5 sm:px-6">

@@ -604,6 +604,7 @@ export default function BuyPower() {
                 <p className="flex items-center justify-between"><span>Address</span> <span>{accountDetails?.location?.address ?? "Address not set"}</span></p>
                 <p className="flex items-center justify-between"><span>District</span> <span>{accountDetails?.location?.district ?? "District not set"}</span></p>
                 <p className="flex items-center justify-between"><span>Tariff</span> <span>{accountDetails?.meta?.tariff ?? "Tariff not set"}</span></p>
+                <p className="flex items-center justify-between"><span>Tariff Rate</span> <span>{accountDetails?.meta?.tariff_rate ?? "Tariff not set"}/Kwh</span></p>
               </div>
             </div>
           </section>

@@ -12,6 +12,9 @@ import {
   walletHistory,
   type WalletHistory,
 } from "@/app/services/walletService";
+import WalletCard from "@/app/components/dashboard/WalletCard";
+import { toast } from "react-toastify";
+import { getErrorMessage } from "@/app/utils/getErrorMessage";
 
 export default function FundWalletPage() {
   const [balance, setBalance] = useState(0);
@@ -51,7 +54,7 @@ export default function FundWalletPage() {
     loadAccount();
   }, []);
 
-  
+
   useEffect(() => {
     const loadWallet = async () => {
       try {
@@ -88,7 +91,7 @@ export default function FundWalletPage() {
     loadWallet();
   }, []);
 
-  
+
   const handleTopUp = async ({
     amount,
   }: {
@@ -99,9 +102,11 @@ export default function FundWalletPage() {
     });
 
     if (!response?.payment_link) {
+      toast.error(getErrorMessage(response));
       throw new Error(
         "Payment link was not returned by the server."
       );
+      
     }
 
     sessionStorage.setItem(
@@ -176,16 +181,18 @@ export default function FundWalletPage() {
     );
 
   return (
-    <FundWallet
-      balance={balance}
-      accountName={accountName}
-      accountNumber={accountNumber}
-      addedThisMonth={addedThisMonth}
-      topUps={topUps}
-      currency="NGN"
-      onTopUp={handleTopUp}
-      onSendMoney={handleSendMoney}
-    />
+    <div>
+      <FundWallet
+        balance={balance}
+        accountName={accountName}
+        accountNumber={accountNumber}
+        addedThisMonth={addedThisMonth}
+        topUps={topUps}
+        currency="NGN"
+        onTopUp={handleTopUp}
+        onSendMoney={handleSendMoney}
+      />
+    </div>
   );
 }
 

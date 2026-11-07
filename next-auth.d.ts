@@ -1,28 +1,3 @@
-// import NextAuth from "next-auth";
-
-// declare module "next-auth" {
-//   interface User {
-//     access?: string;
-//     refresh?: string;
-//     customer?: any;
-//   }
-
-//   interface Session {
-//     user: User & {
-//       access?: string;
-//       refresh?: string;
-//       customer?: any;
-//     };
-//   }
-// }
-
-// declare module "next-auth/jwt" {
-//   interface JWT {
-//     access?: string;
-//     refresh?: string;
-//     customer?: any;
-//   }
-// }
 
 import "next-auth";
 

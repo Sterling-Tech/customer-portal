@@ -23,20 +23,6 @@ const axiosInstance = axios.create({
 });
 
 // Attach access token to requests
-// axiosInstance.interceptors.request.use(
-//   async (config) => {
-//     const session = await getSession();
-
-//     const accessToken = session?.user?.access;
-
-//     if (accessToken) {
-//       config.headers.Authorization = `Bearer ${accessToken}`;
-//     }
-
-//     return config;
-//   },
-//   (error) => Promise.reject(error)
-// );
 axiosInstance.interceptors.request.use(
   async (config) => {
     let accessToken: string | null | undefined;

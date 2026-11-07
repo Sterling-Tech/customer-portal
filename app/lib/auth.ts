@@ -21,69 +21,137 @@ export const authOptions: NextAuthOptions = {
         },
       },
 
-      async authorize(credentials) {
-        const identifier = credentials?.identifier;
-        const password = credentials?.password;
+      // async authorize(credentials) {
+      //   const identifier = credentials?.identifier;
+      //   const password = credentials?.password;
         
 
-        if (
-          typeof identifier !== "string" ||
-          typeof password !== "string" ||
-          !identifier.trim() ||
-          !password
-        ) {
-          return null;
-        }
+      //   if (
+      //     typeof identifier !== "string" ||
+      //     typeof password !== "string" ||
+      //     !identifier.trim() ||
+      //     !password
+      //   ) {
+      //     return null;
+      //   }
 
-        try {
-          const response = await axios.post<AuthResponse>(
-            `${process.env.NEXT_PUBLIC_API_URL}/customer/auth/login/`,
-            {
-              identifier: identifier.trim(),
-              password,
-            },
-            {
-              headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json",
-              },
-            }
-          );
+      //   try {
+      //     const response = await axios.post<AuthResponse>(
+      //       `${process.env.NEXT_PUBLIC_API_URL}/customer/auth/login/`,
+      //       {
+      //         identifier: identifier.trim(),
+      //         password,
+      //       },
+      //       {
+      //         headers: {
+      //           Accept: "application/json",
+      //           "Content-Type": "application/json",
+      //         },
+      //       }
+      //     );
 
-          const { access, refresh, customer } = response.data;
+      //     const { access, refresh, customer } = response.data;
 
-          if (!access || !refresh || !customer) {
-            return null;
-          }
+      //     if (!access || !refresh || !customer) {
+      //       return null;
+      //     }
 
-          return {
-            id: String(customer.id),
-            name: customer.name,
-            account_number: customer.account_number,
-            meter_number: customer.meter_number,
+      //     return {
+      //       id: String(customer.id),
+      //       name: customer.name,
+      //       account_number: customer.account_number,
+      //       meter_number: customer.meter_number,
 
-            access,
-            refresh,
-            customer,
-          };
-        } catch (error) {
-          if (axios.isAxiosError(error)) {
-            const status = error.response?.status;
-            const data = error.response?.data;
+      //       access,
+      //       refresh,
+      //       customer,
+      //     };
+      //   } catch (error) {
+      //     if (axios.isAxiosError(error)) {
+      //       const status = error.response?.status;
+      //       const data = error.response?.data;
 
-            if (
-              status === 403 &&
-              data?.status === "password_expired"
-            ) {
-              throw new Error("PASSWORD_EXPIRED");
-            }
-          }
+      //       if (
+      //         status === 403 &&
+      //         data?.status === "password_expired"
+      //       ) {
+      //         throw new Error("PASSWORD_EXPIRED");
+      //       }
+      //     }
 
-          console.error("Customer authentication failed");
+      //     console.error("Customer authentication failed");
 
-          return null;
-        }
+      //     return null;
+      //   }
+      // },
+      async authorize(credentials) {
+  const identifier = credentials?.identifier;
+  const password = credentials?.password;
+
+  if (
+    typeof identifier !== "string" ||
+    typeof password !== "string" ||
+    !identifier.trim() ||
+    !password
+  ) {
+    throw new Error("Please enter your account number and password.");
+  }
+
+  try {
+    const response = await axios.post<AuthResponse>(
+      `${process.env.NEXT_PUBLIC_API_URL}/customer/auth/login/`,
+      {
+        identifier: identifier.trim(),
+        password,
       },
+      {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    const { access, refresh, customer } = response.data;
+
+    if (!access || !refresh || !customer) {
+      throw new Error("Invalid login response from server.");
+    }
+
+    return {
+      id: String(customer.id),
+      name: customer.name,
+      account_number: customer.account_number,
+      meter_number: customer.meter_number,
+      access,
+      refresh,
+      customer,
+    };
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      const status = error.response?.status;
+      const data = error.response?.data;
+
+      if (status === 403 && data?.status === "password_expired") {
+        throw new Error("PASSWORD_EXPIRED");
+      }
+
+      const message =
+        data?.detail ||
+        data?.message ||
+        data?.error ||
+        "Invalid account number or password.";
+
+      throw new Error(message);
+    }
+
+    if (error instanceof Error) {
+      throw error;
+    }
+
+    throw new Error("Unable to log in. Please try again.");
+  }
+},
     }),
   ],
 

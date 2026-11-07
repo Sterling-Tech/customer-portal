@@ -24,3 +24,22 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* PDF Content Styles */
+.bill-pdf-content {
+  width: 100%;
+  background: #ffffff;
+  color: #111827;
+  font-family: Arial, sans-serif;
+}
+
+.bill-pdf-content .bill-section {
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+.bill-pdf-content .bill-detail-row {
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+

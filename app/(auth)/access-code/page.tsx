@@ -160,23 +160,23 @@ export default function GateSignIn({
                         }
                     }}
                     size="small"
-                    className="bg-gray-100 hover:bg-gray-200"
+                    // className="bg-indigo-400 hover:bg-indigo-500"
                     aria-label="Go back"
                 >
-                    <ArrowBack fontSize="small" />
+                    <ArrowBack fontSize="small" className="text-indigo-500"/>
                 </IconButton>
 
                 <Box>
                     <Typography
                         variant="subtitle1"
-                        className="font-semibold text-gray-900 leading-tight"
+                        className="font-bold text-gray-900 leading-tight"
                     >
                         Gate access
                     </Typography>
 
                     <Typography
                         variant="caption"
-                        className="text-gray-500"
+                        className="text-indigo-500"
                     >
                         Security sign in
                     </Typography>
@@ -380,7 +380,7 @@ export default function GateSignIn({
                             router.push("/login");
                         }
                     }}
-                    className="mt-6 !normal-case !text-gray-500 hover:!text-indigo-600 !font-medium"
+                    className="mt-6 !normal-case !text-indigo-600 !font-medium"
                 >
                     Back to customer sign in
                 </Button>
