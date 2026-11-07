@@ -99,7 +99,8 @@ export const authOptions: NextAuthOptions = {
 
   try {
     const response = await axios.post<AuthResponse>(
-      `${process.env.NEXT_PUBLIC_API_URL}/customer/auth/login/`,
+      // `${process.env.NEXT_PUBLIC_API_URL}/customer/auth/login/`,
+      `${process.env.NEXT_PUBLIC_API_SAAS_URL}/customer/auth/login/`,
       {
         identifier: identifier.trim(),
         password,
